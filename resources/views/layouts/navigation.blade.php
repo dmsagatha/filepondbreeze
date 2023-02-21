@@ -20,8 +20,7 @@
 
       <!-- Settings Dropdown -->
       <div class="hidden sm:flex sm:items-center sm:ml-6">
-        <img src="{{ Storage::url('avatars/' . auth()->id() . '/' . auth()->user()->avatar) }}" class="mr-3" alt="">
-        <img src="{{ asset('avatar-' . auth()->id() . '.png' . auth()->user()->avatar)" alt="">
+        <img width="40" src="{{ Storage::url('avatars/' . auth()->id() . '/' . auth()->user()->avatar) }}" class="mr-3" alt="">
         <x-dropdown align="right" width="48">
           <x-slot name="trigger">
             <button

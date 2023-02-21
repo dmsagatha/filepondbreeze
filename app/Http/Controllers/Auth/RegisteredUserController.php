@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -12,22 +11,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 
 class RegisteredUserController extends Controller
 {
-  /**
-   * Display the registration view.
-   */
   public function create(): View
   {
     return view('auth.register');
   }
-
-  /**
-   * Handle an incoming registration request.
-   *
-   * @throws \Illuminate\Validation\ValidationException
-   */
+  
   public function store(Request $request): RedirectResponse
   {
     $request->validate([
@@ -47,10 +39,12 @@ class RegisteredUserController extends Controller
     if ($request->hasFile('avatar')) {
       $file = $request->file('avatar');
       $filename = $file->getclientOriginalName();
-      $file->storeAs('avatars/' . $user->id, $filename, 'public');
-      /* $user->update([
+      // $file->storeAs('avatars/' . $user->id, $filename, 'public');
+      // $file->storeAs('avatars/' . auth()->id(), $filename, 'public');
+      $file->storeAs('avatars/' . auth()->id(), $filename);
+      $user->update([
         'avatar' => $filename
-      ]); */
+      ]);
     }
 
     event(new Registered($user));

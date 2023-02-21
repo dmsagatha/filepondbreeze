@@ -1,0 +1,31 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ namespacedModel }};
+use {{ rootNamespace }}Http\Controllers\Controller;
+use {{ namespacedRequests }}
+use Illuminate\Http\Response;
+
+class {{ class }} extends Controller
+{
+  public function index(): Response
+  {
+  }
+
+  public function store({{ storeRequest }} $request): Response
+  {
+  }
+  
+  public function show({{ model }} ${{ modelVariable }}): Response
+  {
+  }
+  
+  public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): Response
+  {
+  }
+  
+  public function destroy({{ model }} ${{ modelVariable }}): Response
+  {
+  }
+}

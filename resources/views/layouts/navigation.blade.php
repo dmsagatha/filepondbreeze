@@ -20,7 +20,12 @@
 
       <!-- Settings Dropdown -->
       <div class="hidden sm:flex sm:items-center sm:ml-6">
-        <img width="40" src="{{ Storage::url('avatars/' . auth()->id() . '/thumb-' . auth()->user()->avatar) }}" class="mr-3" alt="">
+        {{-- Laravel y Intervention Image --}}
+        {{-- <img width="50" src="{{ Storage::url('avatars/' . auth()->id() . '/thumb-' . auth()->user()->avatar) }}" class="mr-3" alt=""> --}}
+
+        {{-- Laravel-medialibrary --}}
+        <img src="{{ auth()->user()->getFirstMediaUrl('avatars', 'thumb-50') }}" class="mr-3" alt="">
+
         <x-dropdown align="right" width="48">
           <x-slot name="trigger">
             <button

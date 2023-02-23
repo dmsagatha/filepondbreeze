@@ -37,13 +37,15 @@ class RegisteredUserController extends Controller
       'avatar'   => !empty($filename) ? $filename : 'default_avatar.png'
     ]);
 
-    if ($request->hasFile('avatar')) {
+    // Laravel-medialibrary
+    $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+
+
+    // Laravel y Intervention Image
+    /* if ($request->hasFile('avatar')) {
       $file = $request->file('avatar');
       $filename = $file->getclientOriginalName();
       $file->storeAs('avatars/' . $user->id, $filename);
-      // $file->storeAs('avatars/' . $user->id, $filename, 'public');
-      // $file->storeAs('avatars/' . auth()->id(), $filename, 'public');
-      // $file->storeAs('avatars/' . auth()->id(), $filename);
 
       $image = Image::make(storage_path('app/public/avatars/' . $user->id . '/' . $filename))
           ->fit(50, 50)
@@ -52,7 +54,7 @@ class RegisteredUserController extends Controller
       $user->update([
         'avatar' => $filename
       ]);
-    }
+    } */
 
     event(new Registered($user));
 

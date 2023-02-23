@@ -10,6 +10,9 @@ Route::get('/', function () {
 
 Route::get('avatar/{userId}', [UserController::class, 'getAvatar']);
 
+
+Route::post('upload', [UserController::class, 'store']);
+
 Route::get('/dashboard', function () {
   return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

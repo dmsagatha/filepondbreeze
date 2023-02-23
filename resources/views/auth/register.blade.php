@@ -42,7 +42,7 @@
     <div class="mt-4">
       <x-input-label for="avatar" :value="__('Avatar')" />
       
-      <input type="file" name="avatar">
+      <input type="file" name="avatar" id="avatar">
 
       <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
     </div>
@@ -58,4 +58,23 @@
       </x-primary-button>
     </div>
   </form>
+
+  @section('Scripts')
+    <script>
+      // Get a reference to the file input element
+      const inputElement = document.querySelector('input[id="avatar"]');
+
+      // Create a FilePond instance
+      const pond = FilePond.create(inputElement);
+
+      FilePond.setOptions({
+        server: {
+          url: '/upload',
+          headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          }
+        }
+      });
+    </script>
+  @endsection
 </x-guest-layout>

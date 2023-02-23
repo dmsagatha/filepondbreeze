@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Models\TemporaryFile;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,9 @@ class RegisteredUserController extends Controller
       'name'     => ['required', 'string', 'max:255'],
       'email'    => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
       'password' => ['required', 'confirmed', Rules\Password::defaults()],
-      'avatar'   => 'image'
+
+      // Se quita para FilePond
+      // 'avatar'   => 'image'
     ]);
 
     $user = User::create([
@@ -38,9 +41,19 @@ class RegisteredUserController extends Controller
     ]);
 
     // Laravel-medialibrary
-    $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
+    // $user->addMediaFromRequest('avatar')->toMediaCollection('avatars');
 
+    // FilePond
+    $temporaryFile = TemporaryFile::where('folder', $request->avatar)->first();
 
+    if ($temporaryFile) {
+      $user->addMedia(storage_path('app/public/avatars/tmp/' . $request->avatar . '/' . $temporaryFile->filename))
+          ->toMediaCollection('avatars');
+      
+      rmdir(storage_path('app/public/avatars/tmp/' . $request->avatar));
+      $temporaryFile->delete();
+    }
+    
     // Laravel y Intervention Image
     /* if ($request->hasFile('avatar')) {
       $file = $request->file('avatar');

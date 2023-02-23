@@ -10,7 +10,7 @@ Route::get('/', function () {
 
 Route::get('avatar/{userId}', [UserController::class, 'getAvatar']);
 
-
+// FilePond
 Route::post('upload', [UserController::class, 'store']);
 
 Route::get('/dashboard', function () {

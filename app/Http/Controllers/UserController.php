@@ -16,7 +16,8 @@ class UserController extends Controller
       storage_path('app/avatars/' . $userId . '/' . $user->avatar), 'avatar.png'
     );
   }
-
+  
+  // FilePond
   public function store(Request $request)
   {
     if ($request->hasFile('avatar')) {

@@ -13,4 +13,14 @@ class PostController extends Controller
 
     return view('posts.index', compact('posts'));
   }
+  
+  public function store(Request $request)
+  {
+    $request->validate([
+      'title'     => ['required', 'unique:' . Post::class],
+
+      // Se quita para FilePond
+      // 'photo'   => 'image'
+    ]);
+  }
 }

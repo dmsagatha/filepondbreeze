@@ -14,6 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Intervention\Image\Facades\Image;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\File;
 
 class RegisteredUserController extends Controller
 {
@@ -50,10 +51,14 @@ class RegisteredUserController extends Controller
       $user->addMedia(storage_path('app/public/avatars/tmp/' . $request->avatar . '/' . $temporaryFile->filename))
           ->toMediaCollection('avatars');
       
-      rmdir(storage_path('app/public/avatars/tmp/' . $request->avatar));
+      // Eliminar directorio y archivo temporal
+      // rmdir(storage_path('app/public/avatars/tmp/' . $request->avatar));   
+      File::deleteDirectory(storage_path('app/public/avatars/tmp/' . $request->avatar));
+
+      // Eliminar el archivo temporal del modelo asociado
       $temporaryFile->delete();
     }
-    
+
     // Laravel y Intervention Image
     /* if ($request->hasFile('avatar')) {
       $file = $request->file('avatar');

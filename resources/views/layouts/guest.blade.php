@@ -15,6 +15,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+
+    @stack('styles')
   </head>
   <body class="font-sans text-gray-900 antialiased">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
@@ -31,6 +33,6 @@
 
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 
-    @yield('Scripts')
+    @stack('scripts')
   </body>
 </html>

@@ -59,12 +59,9 @@
     </div>
   </form>
 
-  @section('Scripts')
+  @push('scripts')
     <script>
-      // Get a reference to the file input element
       const inputElement = document.querySelector('input[id="avatar"]');
-
-      // Create a FilePond instance
       const pond = FilePond.create(inputElement);
 
       FilePond.setOptions({
@@ -76,5 +73,5 @@
         }
       });
     </script>
-  @endsection
+  @endpush
 </x-guest-layout>

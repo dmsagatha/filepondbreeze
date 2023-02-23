@@ -3,15 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Intervention\Image\Facades\Image;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -39,9 +40,15 @@ class RegisteredUserController extends Controller
     if ($request->hasFile('avatar')) {
       $file = $request->file('avatar');
       $filename = $file->getclientOriginalName();
+      $file->storeAs('avatars/' . $user->id, $filename);
       // $file->storeAs('avatars/' . $user->id, $filename, 'public');
       // $file->storeAs('avatars/' . auth()->id(), $filename, 'public');
-      $file->storeAs('avatars/' . auth()->id(), $filename);
+      // $file->storeAs('avatars/' . auth()->id(), $filename);
+
+      $image = Image::make(storage_path('app/public/avatars/' . $user->id . '/' . $filename))
+          ->fit(50, 50)
+          ->save(storage_path('app/public/avatars/' . $user->id . '/thumb-' . $filename));
+
       $user->update([
         'avatar' => $filename
       ]);

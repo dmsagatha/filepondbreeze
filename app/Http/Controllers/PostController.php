@@ -8,16 +8,24 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-  public function index(): View
+  public function index(): Response
   {
     $posts = Post::all();
 
-    return view('posts.index', compact('posts'));
+    return response()->view('posts.index', [
+      'posts' => Post::orderBy('title')->get()
+    ]);
   }
+
+  /* public function create(): Response
+  {
+    return response()->view('posts.form');
+  } */
   
   public function store(Request $request): RedirectResponse
   {
@@ -29,14 +37,11 @@ class PostController extends Controller
     $temporaryFile = TemporaryFile::where('folder', $request->photo)->first();
 
     if ($temporaryFile) {
-      // Storage::copy('posts/tmp/' . $temporaryFile->folder . '/' . $temporaryFile->filename, 'posts/' . $temporaryFile->folder . '/' . $temporaryFile->filename);
-      Storage::copy('posts/tmp/' . $temporaryFile->folder . '/' . $temporaryFile->filename, 'posts/' . '/' . $temporaryFile->filename);
+      Storage::copy('posts/tmp/' . $temporaryFile->folder . '/' . $temporaryFile->filename, 'posts/' . $temporaryFile->folder . '/' . $temporaryFile->filename);
 
       Post::create([
         'title' => $request->title,
-        // 'photo' => $temporaryFile->folder . '/' . $temporaryFile->filename
-        // 'photo' => $temporaryFile->filename
-        'photo' => now() . '/' . $temporaryFile->filename
+        'photo' => $temporaryFile->folder . '/' . $temporaryFile->filename
       ]);
       
       // Eliminar directorio y archivo temporal
@@ -70,4 +75,39 @@ class PostController extends Controller
 
     return '';
   }
+
+  /* public function show(string $id): Response
+  {
+    return response()->view('posts.show', [
+      'post' => Post::findOrFail($id)
+    ]);
+  }
+
+  public function edit(string $id): Response
+  {
+    return response()->view('posts.form', [
+      'post' => Post::findOrFail($id),
+    ]);
+  }
+  public function edit(Post $post): View
+  {
+    return view('posts.edit', compact('post'));
+  }
+  
+  public function destroy(string $id): RedirectResponse
+  {
+    $post = Post::findOrFail($id);
+
+    $currentImage = str_replace('/storage', '/public', $post->featured_image);
+    Storage::delete($currentImage);
+
+    $delete = $post->delete($id);
+
+    if($delete) {
+      session()->flash('notif.success', 'Post deleted successfully!');
+      return redirect()->route('posts.index');
+    }
+
+    return abort(500);
+  } */
 }

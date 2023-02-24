@@ -7,11 +7,6 @@ use App\Models\TemporaryFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
-
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-
 use App\Http\Controllers\Controller;
 
 class PostController extends Controller

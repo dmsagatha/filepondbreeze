@@ -37,8 +37,7 @@ class RegisteredUserController extends Controller
     $user = User::create([
       'name'     => $request->name,
       'email'    => $request->email,
-      'password' => Hash::make($request->password),
-      'avatar'   => !empty($filename) ? $filename : 'default_avatar.png'
+      'password' => Hash::make($request->password)
     ]);
 
     // Laravel-medialibrary

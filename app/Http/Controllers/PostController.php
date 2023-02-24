@@ -22,30 +22,30 @@ class PostController extends Controller
   public function store(Request $request)
   {
     $request->validate([
-      'title'     => ['required', 'unique:' . Post::class],
-
-      // Se quita para FilePond
-      // 'photo'   => 'image'
-    ]);
-
-    $post = Post::create([
-      'title' => $request->title,
-      'photo' => !empty($filename) ? $filename : 'default_photo.png'
+      'title' => ['required', 'unique:' . Post::class]
     ]);
 
     // FilePond
     $temporaryFile = TemporaryFile::where('folder', $request->photo)->first();
 
     if ($temporaryFile) {
-      $post->addMedia(storage_path('app/public/posts/tmp/' . $request->photo . '/' . $temporaryFile->filename))
-          ->toMediaCollection('posts');
+      // Storage::copy('posts/tmp/' . $temporaryFile->folder . '/' . $temporaryFile->filename, 'posts/' . $temporaryFile->folder . '/' . $temporaryFile->filename);
+      Storage::copy('posts/tmp/' . $temporaryFile->folder . '/' . $temporaryFile->filename, 'posts/' . '/' . $temporaryFile->filename);
+
+      Post::create([
+        'title' => $request->title,
+        // 'photo' => $temporaryFile->folder . '/' . $temporaryFile->filename
+        'photo' => $temporaryFile->filename
+      ]);
       
       // Eliminar directorio y archivo temporal
-      // File::deleteDirectory(storage_path('app/public/posts/tmp/' . $request->photo));
-      Storage::deleteDirectory('posts/tmp/' . $temporaryFile->folder);
+      File::deleteDirectory(storage_path('app/public/posts/tmp/' . $request->photo));
+      // Storage::deleteDirectory('posts/tmp/' . $temporaryFile->folder);
 
       // Eliminar el archivo temporal del modelo asociado
       $temporaryFile->delete();
+
+      return to_route('posts.index')->with('success', 'Post creado');
     }
   }
   
@@ -55,7 +55,8 @@ class PostController extends Controller
     if ($request->hasFile('photo')) {
       $file = $request->file('photo');
       $filename = $file->getclientOriginalName();
-      $folder = uniqid() . '-' . now()->timestamp;
+      // $folder = uniqid() . '-' . now()->timestamp;
+      $folder = uniqid('post', true);
       $file->storeAs('posts/tmp/' . $folder, $filename);
 
       TemporaryFile::create([

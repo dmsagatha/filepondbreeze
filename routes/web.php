@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,10 +15,12 @@ Route::get('avatar/{userId}', [UserController::class, 'getAvatar']);
 // FilePond
 Route::post('upload', [UserController::class, 'store']);
 
-// Post
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::post('post/store', [PostController::class, 'store'])->name('posts.store');
-
+Route::prefix('admin')->group(function () {
+  // Route::resource('posts', PostController::class);
+  Route::resource('posts', PostController::class)->only([
+    'index', 'store'
+  ]);
+});
 // FilePond
 Route::post('/tmp_upload', [PostController::class, 'tmpUplaod']);
 Route::delete('/tmp_delete', [PostController::class, 'tmpDelete']);

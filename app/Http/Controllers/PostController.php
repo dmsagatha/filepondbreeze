@@ -6,20 +6,20 @@ use App\Models\Post;
 use App\Models\TemporaryFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
-  public function index()
+  public function index(): View
   {
     $posts = Post::all();
 
     return view('posts.index', compact('posts'));
   }
   
-  public function store(Request $request)
+  public function store(Request $request): RedirectResponse
   {
     $request->validate([
       'title' => ['required', 'unique:' . Post::class]
@@ -35,7 +35,8 @@ class PostController extends Controller
       Post::create([
         'title' => $request->title,
         // 'photo' => $temporaryFile->folder . '/' . $temporaryFile->filename
-        'photo' => $temporaryFile->filename
+        // 'photo' => $temporaryFile->filename
+        'photo' => now() . '/' . $temporaryFile->filename
       ]);
       
       // Eliminar directorio y archivo temporal

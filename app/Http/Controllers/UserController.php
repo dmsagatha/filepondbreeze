@@ -23,7 +23,7 @@ class UserController extends Controller
     if ($request->hasFile('avatar')) {
       $file = $request->file('avatar');
       $filename = $file->getclientOriginalName();
-      $folder =uniqid() . '-' . now()->timestamp;
+      $folder = uniqid() . '-' . now()->timestamp;
       $file->storeAs('avatars/tmp/' . $folder, $filename);
 
       TemporaryFile::create([

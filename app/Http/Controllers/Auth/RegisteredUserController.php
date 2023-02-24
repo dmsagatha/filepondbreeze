@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Models\TemporaryFile;
+use Illuminate\View\View;
 use Illuminate\Validation\Rules;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
@@ -15,6 +13,8 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class RegisteredUserController extends Controller
 {
@@ -37,8 +37,7 @@ class RegisteredUserController extends Controller
     $user = User::create([
       'name'     => $request->name,
       'email'    => $request->email,
-      'password' => Hash::make($request->password),
-      'avatar'   => !empty($filename) ? $filename : 'default_avatar.png'
+      'password' => Hash::make($request->password)
     ]);
 
     // Laravel-medialibrary

@@ -6,10 +6,11 @@ use {{ namespacedModel }};
 use {{ rootNamespace }}Http\Controllers\Controller;
 use {{ namespacedRequests }}
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class {{ class }} extends Controller
 {
-  public function index(): Response
+  public function index(): View
   {
   }
 

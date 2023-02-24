@@ -18,6 +18,7 @@ Route::post('upload', [UserController::class, 'store']);
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::post('post/store', [PostController::class, 'store'])->name('posts.store');
 
+// FilePond
 Route::post('/tmp_upload', [PostController::class, 'tmpUplaod']);
 Route::delete('/tmp_delete', [PostController::class, 'tmpDelete']);
 

@@ -34,6 +34,7 @@
       FilePond.setOptions({
         server: {
           url: '/tmp_upload',
+          // process: '/tmp_upload',
           headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
           }

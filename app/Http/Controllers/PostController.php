@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\TemporaryFile;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -40,7 +41,8 @@ class PostController extends Controller
           ->toMediaCollection('posts');
       
       // Eliminar directorio y archivo temporal
-      File::deleteDirectory(storage_path('app/public/posts/tmp/' . $request->photo));
+      // File::deleteDirectory(storage_path('app/public/posts/tmp/' . $request->photo));
+      Storage::deleteDirectory('posts/tmp/' . $temporaryFile->folder);
 
       // Eliminar el archivo temporal del modelo asociado
       $temporaryFile->delete();

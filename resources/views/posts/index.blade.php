@@ -110,18 +110,9 @@
         server: {
           // url: '/tmp_upload',
           process: '/tmp_upload',
+          revert: '/tmp_delete',
           headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
-          },
-          revert: {
-            url: '/tmp_delete',
-            method: 'DELETE',
-            headers: {
-              'x-CSRF-TOKEN': '{{ csrf_token() }}',
-            },
-            onload: (response) => {
-              console.log(response);
-            },
           }
         }
       });

@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -29,12 +30,24 @@ class PostController extends Controller
   
   public function store(Request $request): RedirectResponse
   {
-    $request->validate([
+    /* $request->validate([
       'title' => ['required', 'unique:' . Post::class]
+    ]); */
+    $validator = Validator::make($request->all(), [
+      'title' => ['required', 'unique:posts']
     ]);
 
     // FilePond
     $temporaryFile = TemporaryFile::where('folder', $request->photo)->first();
+
+    if ($validator->fails() && $temporaryFile) {
+      Storage::deleteDirectory('posts/tmp/' . $temporaryFile->folder);
+      $temporaryFile->delete();
+
+      return to_route('posts.index')->withErrors($validator)->withInput();
+    } elseif ($validator->fails()) {
+      return to_route('posts.index')->withErrors($validator)->withInput();
+    }
 
     if ($temporaryFile) {
       Storage::copy('posts/tmp/' . $temporaryFile->folder . '/' . $temporaryFile->filename, 'posts/' . $temporaryFile->folder . '/' . $temporaryFile->filename);
@@ -53,6 +66,8 @@ class PostController extends Controller
 
       return to_route('posts.index')->with('success', 'Post creado');
     }
+
+    return to_route('posts.index')->with('danger', 'Por favor subir un archivo');
   }
   
   // FilePond
@@ -74,6 +89,18 @@ class PostController extends Controller
     }
 
     return '';
+  }
+
+  public function tmpDelete()
+  {
+    $temporaryFile = TemporaryFile::where('folder', request()->getContent())->first(); 
+    
+    if ($temporaryFile) {
+      Storage::deleteDirectory('posts/tmp/' . $temporaryFile->folder);
+      $temporaryFile->delete();
+
+      return response('');
+    }
   }
 
   /* public function show(string $id): Response

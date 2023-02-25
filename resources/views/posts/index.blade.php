@@ -7,6 +7,17 @@
 
   <div class="py-4">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+      @if (session()->has('success'))
+        <div class="bg-green-400 text-sm text-green-700 m-2 p-2">
+          {{ session('success') }}
+        </div>
+      @endif
+      @if (session()->has('danger'))
+        <div class="bg-red-400 text-sm text-red-700 m-2 p-2">
+          {{ session('danger') }}
+        </div>
+      @endif
+
       <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
         @csrf
 
@@ -21,7 +32,7 @@
         <div class="mt-4">
           <x-input-label for="photo" :value="__('Fotografía')" />
 
-          <input type="file" name="photo" id="photo">
+          <input type="file" name="photo" id="filePond" class="w-48 left-5">
 
           <x-input-error :messages="$errors->get('photo')" class="mt-2" />
         </div>
@@ -92,24 +103,25 @@
   </div>
 
   @push('styles')
-    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
   @endpush
 
   @push('scripts')
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 
     <script>
       FilePond.registerPlugin(FilePondPluginImagePreview);
 
-      const inputElement = document.querySelector('input[id="photo"]');
+      const inputElement = document.querySelector('input[id="filePond"]');
       const pond = FilePond.create(inputElement);
 
       FilePond.setOptions({
         server: {
           // url: '/tmp_upload',
           process: '/tmp_upload',
+          revert: '/tmp_delete',
           headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
           }

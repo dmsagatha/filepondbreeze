@@ -17,7 +17,7 @@
           {{ session('danger') }}
         </div>
       @endif
-      
+
       <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
         @csrf
 
@@ -32,7 +32,7 @@
         <div class="mt-4">
           <x-input-label for="photo" :value="__('Fotografía')" />
 
-          <input type="file" name="photo" id="filePond">
+          <input type="file" name="photo" id="filePond" class="w-48 left-5">
 
           <x-input-error :messages="$errors->get('photo')" class="mt-2" />
         </div>

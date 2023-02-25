@@ -21,7 +21,7 @@
         <div class="mt-4">
           <x-input-label for="photo" :value="__('Fotografía')" />
 
-          <input type="file" name="photo" id="photo">
+          <input type="file" name="photo" id="filePond">
 
           <x-input-error :messages="$errors->get('photo')" class="mt-2" />
         </div>
@@ -92,18 +92,18 @@
   </div>
 
   @push('styles')
-    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
   @endpush
 
   @push('scripts')
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 
     <script>
       FilePond.registerPlugin(FilePondPluginImagePreview);
 
-      const inputElement = document.querySelector('input[id="photo"]');
+      const inputElement = document.querySelector('input[id="filePond"]');
       const pond = FilePond.create(inputElement);
 
       FilePond.setOptions({
@@ -112,6 +112,16 @@
           process: '/tmp_upload',
           headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          },
+          revert: {
+            url: '/tmp_delete',
+            method: 'DELETE',
+            headers: {
+              'x-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            onload: (response) => {
+              console.log(response);
+            },
           }
         }
       });

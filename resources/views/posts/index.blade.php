@@ -112,11 +112,7 @@
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script> --}}
 
     <script type="module">
-      // FilePond.registerPlugin(FilePondPluginImagePreview);
-
-// import pt_BR from 'filepond/locale/es-es.js';
-
-// FilePond.setOptions(pt_BR);
+      // Registrar el plugin
       FilePond.registerPlugin(FilePondPluginImagePreview);
       const inputElement = document.querySelector('input[id="filePond"]');
       const pond = FilePond.create(inputElement);

@@ -19,7 +19,7 @@ class PostController extends Controller
     $posts = Post::all();
 
     return response()->view('posts.index', [
-      'posts' => Post::orderBy('title')->get()
+      'posts' => Post::orderBy('title', 'desc')->get()
     ]);
   }
 

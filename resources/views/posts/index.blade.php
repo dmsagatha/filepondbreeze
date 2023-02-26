@@ -117,7 +117,7 @@
 // import pt_BR from 'filepond/locale/es-es.js';
 
 // FilePond.setOptions(pt_BR);
-
+      FilePond.registerPlugin(FilePondPluginImagePreview);
       const inputElement = document.querySelector('input[id="filePond"]');
       const pond = FilePond.create(inputElement);
 

@@ -111,7 +111,6 @@
 
       FilePond.setOptions({
         server: {
-          // url: '/tmp_upload',
           process: '/tmp_upload',
           revert: '/tmp_delete',
           headers: {

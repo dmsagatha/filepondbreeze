@@ -12,6 +12,6 @@ window.Alpine = Alpine;
 window.FilePond = FilePond;
 window.FilePondPluginImagePreview = FilePondPluginImagePreview;
 
-FilePond.setOptions(pt_ES);
-
 Alpine.start();
+
+FilePond.setOptions(pt_ES);

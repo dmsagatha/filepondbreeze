@@ -106,6 +106,7 @@
     <script type="module">
       // Registrar el plugin
       FilePond.registerPlugin(FilePondPluginImagePreview);
+      
       const inputElement = document.querySelector('input[id="filePond"]');
       const pond = FilePond.create(inputElement);
 

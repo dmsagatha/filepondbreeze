@@ -58,7 +58,7 @@ class ProductController extends Controller
 
     return response()->json([
       'name'          => $name,
-      'original_name' => $file->getClientOriginalName(),
+      'original_name' => $file->getClientOriginalName()
     ]);
   }
   

@@ -88,7 +88,9 @@
                     {{ $item->updated_at }}
                   </td>
                   <td class="m-5 p-5 flex flex-row items-center">
-                    <img class="h-10 w-10 rounded-lg" src="{{ Storage::disk('public')->url('products/' . $item->photo) }}" alt="" title="{{ $item->title }}" />
+                    @foreach ($item->media as $image)
+                      <img src="{{ $image->getUrl('thumb') }}" alt="Imagen no encontrada">
+                    @endforeach
                   </td>
                   <td
                     class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">

@@ -39,11 +39,6 @@ class ProductController extends Controller
       'description' => $request->description,
     ]);
 
-    // Si trae un archivo adicionarlo a la colección products
-    /* if (isset($request->file)) {
-    $product->addMediaFromRequest($request->file)->toMediaCollection('products');
-    } */
-
     foreach ($request->input('photo', []) as $file)
     {
       $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection($this->mediaCollection);

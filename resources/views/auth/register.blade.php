@@ -42,7 +42,7 @@
     <div class="mt-4">
       <x-input-label for="avatar" :value="__('Avatar')" />
       
-      <input type="file" name="avatar" id="avatar">
+      <input type="file" name="avatar" id="avatar" accept="image/*">
 
       <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
     </div>

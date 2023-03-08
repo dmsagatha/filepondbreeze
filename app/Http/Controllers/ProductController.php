@@ -20,6 +20,7 @@ class ProductController extends Controller
   
   public function create()
   {
+    return view('products.create');
   }
 
   /* https://cdn.fs.teachablecdn.com/89p5visTTwO2N0v4O6OS
@@ -68,6 +69,10 @@ class ProductController extends Controller
   
   public function edit(Product $product): Response
   {
+    // $product = Product::find($id);
+
+    // return view('products.edit', ['product' => $product, 'photos' => $product->getMedia($this->mediaCollection)]);
+    return view('products.edit', ['product' => $product, 'photos' => $product->getMedia('products')]);
   }
   
   public function update(Request $request, Product $product): RedirectResponse

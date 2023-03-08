@@ -22,11 +22,11 @@ class Product extends Model implements HasMedia
     return $this->morphMany(Media::class, 'model');
   }
 
-  public function registerMediaConversions(Media $media = null): void
+  /* public function registerMediaConversions(Media $media = null): void
   {
     $this->addMediaConversion('thumb')
         ->width(50)
         ->height(50)
         ->sharpen(10);
-  }
+  } */
 }

@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot:header>
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-      {{ __('Products - Dropzone') }}
+      {{ __('Products') }} - Dropzone
     </h2>
   </x-slot>
 
@@ -20,25 +20,20 @@
             </div>
           @endif
 
-          <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('products.update', ['id' => $product->id]) }}" method="POST" enctype="multipart/form-data">
+            @method('PUT')
             @csrf
-
-            <div>
-              <x-input-label for="name" :value="__('Nombre')" />
-              <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus
-                autocomplete="name" />
-              <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input name="name" value="{{ old('name', $product->name) }}" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea name="description" class="form-control"
+                rows="3">{{ old('description', $product->description) }}</textarea>
             </div>
 
-            <div>
-              <x-input-label for="description" :value="__('Descripción')" />
-              <x-text-input id="description" class="block mt-1 w-full" type="text" name="description"
-                :value="old('description')" autofocus autocomplete="description" />
-              <x-input-error :messages="$errors->get('description')" class="mt-2" />
-            </div>
-
-            <!-- Photo -->
-            <div class="mt-4">
+            <div class="mb-3">
               <label for="document">Photo</label>
               <div class="needsclick dropzone" id="document-dropzone">
 
@@ -47,7 +42,7 @@
 
             <div class="flex items-center justify-end mt-4">
               <x-primary-button class="ml-4">
-                {{ __('Guardar Datos') }}
+                {{ __('Actualizar Datos') }}
               </x-primary-button>
             </div>
           </form>

@@ -2,9 +2,9 @@
   <x-slot:header>
     <div class="flex justify-between">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ 'Products - Dropzone' }}
+        {{ __('Products') }} - Dropzone
       </h2>
-      <a href="{{ route('products.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crear</a>
+      <a href="{{ route('products.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Create') }}</a>
     </div>
   </x-slot>
 
@@ -16,12 +16,12 @@
           <table class="border-collapse table-auto w-full text-sm">
             <thead>
               <tr>
-                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">Nombre</th>
-                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">Descripción</th>
-                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">Created At</th>
-                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">Updated At</th>
-                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">Updated At</th>
-                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">Action</th>
+                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Name') }}</th>
+                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Description') }}</th>
+                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Created At') }}</th>
+                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Updated At') }}</th>
+                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Photo') }}</th>
+                <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Actions') }}</th>
               </tr>
             </thead>
             <tbody class="bg-white">

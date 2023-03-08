@@ -18,14 +18,15 @@ class ProductController extends Controller
     ]);
   }
   
-  public function create()
+  public function create(): Response
   {
-    return view('products.create');
+    // return response()->view('products.create');
+    return response()->view('products.form');
   }
 
   /* https://cdn.fs.teachablecdn.com/89p5visTTwO2N0v4O6OS
   https://cdn.fs.teachablecdn.com/LU4kLmI0QhWeVIJIFGeT --> 4' */
-  public function store(Request $request)
+  public function store(Request $request): RedirectResponse
   {
     $product = Product::create([
       'name' => $request->name,
@@ -42,7 +43,7 @@ class ProductController extends Controller
       $product->addMedia(storage_path('app/public/products/' . $file))->toMediaCollection('products');
     }
 
-    return redirect()->route('products.index');
+    return redirect(route('products.index'));
   }
 
   public function storeMedia(Request $request)

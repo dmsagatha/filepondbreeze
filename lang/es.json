@@ -104,5 +104,14 @@
   "Uptaded": "Actualizado",
   "Actions": "Acciones",
 
-  "Inventory": "N° Inventario"
+  "Products": "Productos",
+  "Product": "Producto",
+  "Photo": "Imagen",
+  "Inventory": "N° Inventario",
+  "Description": "Descripción",
+  "Created At": "Creado",
+  "Updated At": "Actualizado",
+
+  "Create Product": "Crear Producto",
+  "Edit Product": "Editar Producto"
 }

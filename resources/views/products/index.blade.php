@@ -50,7 +50,7 @@
                     <a href="{{ route('products.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
 
                     {{-- add delete button using form tag --}}
-                    <form method="post" action="{{ route('products.delete', ['id' => $product->id]) }}" class="inline">
+                    <form method="post" action="{{ route('products.destroy', $item) }}" class="inline">
                       @csrf @method('delete')
 
                       <button

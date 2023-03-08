@@ -70,9 +70,9 @@ class ProductController extends Controller
   {
   }
 
-  public function edit($id)
+  public function edit(Product $product)
   {
-    $product = Product::find($id);
+    // $product = Product::find($id);
 
     return view('products.edit', [
       'product' => $product,
@@ -80,9 +80,9 @@ class ProductController extends Controller
     ]);
   }
 
-  public function update(Request $request, $id)
+  public function update(Product $product, Request $request)
   {
-    $product = Product::with('photos')->find($id);
+    // $product = Product::with('photos')->find($id);
     $product->update([
       'name'        => $request->name,
       'description' => $request->description,
@@ -115,7 +115,7 @@ class ProductController extends Controller
   public function destroy($id)
   {
     Product::find($id)->delete();
-    
+
     return redirect()->route('products.index');
   }
 }

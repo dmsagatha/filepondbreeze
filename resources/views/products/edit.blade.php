@@ -20,9 +20,9 @@
             </div>
           @endif
 
-          <form action="{{ route('products.update', ['id' => $product->id]) }}" method="POST" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
+          <form action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
+            @csrf @method('PUT')
+            
             <div class="mb-3">
               <label class="form-label">Name</label>
               <input name="name" value="{{ old('name', $product->name) }}" type="text" class="form-control">

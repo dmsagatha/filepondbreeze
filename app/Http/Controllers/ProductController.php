@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+  private $mediaCollection = 'photo';
+  
   public function index(): Response
   {
     return response()->view('products.index', [
@@ -40,7 +41,7 @@ class ProductController extends Controller
 
     foreach ($request->input('photo', []) as $file) {
       // $product->addMedia(storage_path('app/public/products/' . $file))->toMediaCollection($this->mediaCollection);
-      $product->addMedia(storage_path('app/public/products/' . $file))->toMediaCollection('products');
+      $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('products');
     }
 
     return redirect(route('products.index'));
@@ -48,7 +49,7 @@ class ProductController extends Controller
 
   public function storeMedia(Request $request)
   {
-    $path = storage_path('app/public/products');
+    $path = storage_path('tmp/uploads');
 
     if (!file_exists($path)) {
       mkdir($path, 0777, true);
@@ -100,7 +101,7 @@ class ProductController extends Controller
 
     foreach ($request->input('photo', []) as $file) {
       if (count($media) === 0 || !in_array($file, $media)) {
-        $product->addMedia(storage_path('app/public/products/' . $file))->toMediaCollection('products');
+        $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('products');
       }
     }
 

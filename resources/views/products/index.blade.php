@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-      {{ __('Products') }}
+      {{ __('Products - Dropzone') }}
     </h2>
   </x-slot>
 
@@ -132,10 +132,15 @@
         url: '{{ route('products.storeMedia') }}',
         maxFilesize: 2, // MB
         addRemoveLinks: true,
-        acceptedFiles: ".jpeg,.jpg,.png,.gif,.pdf",
+        // acceptedFiles: ".jpeg,.jpg,.png,.gif,.pdf",
+        // paramName: 'image',     // Cambiar 'file' por 'image'
+        acceptedFiles: 'image/*',
+	      maxFiles: 1,
         headers: {
           'X-CSRF-TOKEN': "{{ csrf_token() }}"
         },
+        dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el documento<h3>",
+        dictRemoveFile:'Quitar',
         success: function(file, response) {
           $('form').append('<input type="hidden" name="photo[]" value="' + response.name + '">')
           uploadedDocumentMap[file.name] = response.name

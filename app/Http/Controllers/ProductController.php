@@ -80,7 +80,7 @@ class ProductController extends Controller
     ]);
   }
 
-  public function update(Product $product, Request $request)
+  public function update(Product $product, Request $request): RedirectResponse
   {
     // $product = Product::with('photos')->find($id);
     $product->update([
@@ -112,9 +112,9 @@ class ProductController extends Controller
     return redirect()->route('products.index');
   }
 
-  public function destroy($id)
+  public function destroy(Product $product)
   {
-    Product::find($id)->delete();
+    $product->delete();
 
     return redirect()->route('products.index');
   }

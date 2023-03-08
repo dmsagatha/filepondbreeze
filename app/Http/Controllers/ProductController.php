@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-  public function index()
+  public function index(): Response
   {
     return response()->view('products.index', [
       'products' => Product::latest()->get(),

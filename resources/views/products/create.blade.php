@@ -24,6 +24,12 @@
             @csrf
 
             <div>
+              <x-input-label for="name" :value="__('Name')" />
+              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" value="{{ old("name", $product->name) }}" autofocus autocomplete="name" />
+              <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            </div>
+
+            <div>
               <x-input-label for="name" :value="__('Nombre')" />
               <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus
                 autocomplete="name" />
@@ -96,7 +102,7 @@
           }
           $('form').find('input[name="photo[]"][value="' + name + '"]').remove()
         },
-        
+
         init: function() {
           @if (isset($photos))
             var files = {!! json_encode($photos) !!}

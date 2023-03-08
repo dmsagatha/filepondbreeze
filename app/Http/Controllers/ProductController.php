@@ -22,13 +22,18 @@ class ProductController extends Controller
   public function create(): Response
   {
     // return response()->view('products.create');
-    return response()->view('products.create');
+    return response()->view('products.form');
   }
 
   /* https://cdn.fs.teachablecdn.com/89p5visTTwO2N0v4O6OS
   https://cdn.fs.teachablecdn.com/LU4kLmI0QhWeVIJIFGeT --> 4' */
   public function store(Request $request): RedirectResponse
   {
+    $this->validate($request, [
+      'name' => 'required|unique:products',
+      'description'  => 'required'
+    ]);
+
     $product = Product::create([
       'name'        => $request->name,
       'description' => $request->description,
@@ -70,9 +75,9 @@ class ProductController extends Controller
   {
   }
 
-  public function edit(Product $product)
+  public function edit(Product $product): Response
   {
-    return view('products.edit', [
+    return response()->view('products.form', [
       'product' => $product,
       'photos'  => $product->getMedia($this->mediaCollection),
     ]);

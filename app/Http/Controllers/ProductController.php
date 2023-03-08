@@ -73,11 +73,38 @@ class ProductController extends Controller
     // $product = Product::find($id);
 
     // return view('products.edit', ['product' => $product, 'photos' => $product->getMedia($this->mediaCollection)]);
-    return view('products.edit', ['product' => $product, 'photos' => $product->getMedia('products')]);
+    return response()->view('products.form', [
+      'product' => $product, 
+      'photos'  => $product->getMedia('products')
+    ]);
   }
   
-  public function update(Request $request, Product $product): RedirectResponse
+  // public function update(Request $request, Product $product): RedirectResponse
+  public function update(Request $request, $id)
   {
+    $product = Product::with('photos')->find($id);
+    $product->update([
+      'name' => $request->name,
+      'description' => $request->description,
+    ]);
+
+    if (count($product->photos) > 0) {
+      foreach ($product->photos as $media) {
+        if (!in_array($media->file_name, $request->input('photo', []))) {
+            $media->delete();
+        }
+      }
+    }
+
+    $media = $product->photos->pluck('file_name')->toArray();
+
+    foreach ($request->input('photo', []) as $file) {
+      if (count($media) === 0 || !in_array($file, $media)) {
+        $product->addMedia(storage_path('app/public/products/' . $file))->toMediaCollection('products');
+      }
+    }
+
+    return redirect()->route('products.index');
   }
   
   public function destroy(Product $product): RedirectResponse

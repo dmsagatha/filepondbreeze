@@ -2,7 +2,7 @@
   <x-slot:header>
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
       {{-- {{ __('Products - Dropzone') }} --}}
-      {{ isset($product) ? 'Edit Product' : __('Create Product') }}
+      {{ isset($product) ? __('Edit Product') : __('Create Product') }}
     </h2>
     </x-slot>
 
@@ -32,15 +32,14 @@
 
               <div>
                 <x-input-label for="name" :value="__('Name')" />
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus
+                <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" :value="$product->name ?? old('name')" autofocus
                   autocomplete="name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
               </div>
 
               <div>
                 <x-input-label for="description" :value="__('Description')" />
-                <x-text-input id="description" class="block mt-1 w-full" type="text" name="description"
-                  :value="old('description')" autofocus autocomplete="description" />
+                <x-textarea-input id="description" name="description" class="block mt-1 w-full" autocomplete="description">{{ $product->description ?? old('description') }}</x-textarea-input>
                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
               </div>
 
@@ -49,6 +48,7 @@
                 {{-- <label for="document">Photo</label> --}}
                 <x-input-label for="document" :value="__('Photo')" />
                 <div class="needsclick dropzone" id="document-dropzone">
+
                 </div>
               </div>
 

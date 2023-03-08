@@ -72,8 +72,6 @@ class ProductController extends Controller
 
   public function edit(Product $product)
   {
-    // $product = Product::find($id);
-
     return view('products.edit', [
       'product' => $product,
       'photos'  => $product->getMedia($this->mediaCollection),
@@ -82,7 +80,6 @@ class ProductController extends Controller
 
   public function update(Product $product, Request $request): RedirectResponse
   {
-    // $product = Product::with('photos')->find($id);
     $product->update([
       'name'        => $request->name,
       'description' => $request->description,

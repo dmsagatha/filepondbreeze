@@ -16,8 +16,6 @@ class PostController extends Controller
 {
   public function index(): Response
   {
-    $posts = Post::all();
-
     return response()->view('posts.index', [
       // 'posts' => Post::orderBy('title', 'desc')->get()
       'posts' => Post::latest()->get()

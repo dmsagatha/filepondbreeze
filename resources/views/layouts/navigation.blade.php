@@ -18,6 +18,9 @@
           <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
             {{ __('Posts') }}
           </x-nav-link>
+          <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
+            {{ __('Products - Dropzone') }}
+          </x-nav-link>
         </div>
       </div>
 
@@ -27,7 +30,7 @@
         {{-- <img width="50" src="{{ Storage::url('avatars/' . auth()->id() . '/thumb-' . auth()->user()->avatar) }}" class="mr-3" alt=""> --}}
 
         {{-- Laravel-medialibrary --}}
-        <img src="{{ auth()->user()->getFirstMediaUrl('avatars', 'thumb-50') }}" class="mr-3" alt="">
+        <img src="{{ Auth::user()->getFirstMediaUrl('avatars', 'thumb-50') }}" class="mr-3" alt="">
 
         <x-dropdown align="right" width="48">
           <x-slot name="trigger">

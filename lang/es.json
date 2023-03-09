@@ -103,6 +103,20 @@
   "Created": "Creado",
   "Uptaded": "Actualizado",
   "Actions": "Acciones",
+  "View": "Mostrar",
+  "Edit": "Editar",
+  "Delete": "Eliminar",
 
-  "Inventory": "N° Inventario"
+  "Products": "Productos",
+  "Product": "Producto",
+  "Photo": "Imagen",
+  "Inventory": "N° Inventario",
+  "Description": "Descripción",
+  "Created At": "Creado",
+  "Updated At": "Actualizado",
+
+  "Create Product": "Crear Producto",
+  "Edit Product": "Editar Producto",
+
+  "You're logged in!": "¡Estás conectado!"
 }

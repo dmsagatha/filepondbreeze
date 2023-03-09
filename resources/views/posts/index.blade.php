@@ -32,7 +32,7 @@
         <div class="mt-4">
           <x-input-label for="photo" :value="__('Fotografía')" />
 
-          <input type="file" name="photo" id="filePond" class="w-48 left-5">
+          <input type="file" name="photo" id="filePond" class="w-48 left-5" accept="image/*">
 
           <x-input-error :messages="$errors->get('photo')" class="mt-2" />
         </div>
@@ -86,11 +86,13 @@
                     <a href="#"
                       class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">EDIT</a>
                     {{-- add delete button using form tag --}}
-                    <form method="post" action="#" class="inline">
+                    {{-- <form method="post" action="#" class="inline">
                       @csrf
                       @method('delete')
                       <button
-                        class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">DELETE</button>
+                        class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
+                        DELETE
+                      </button> --}}
                     </form>
                   </td>
                 </tr>

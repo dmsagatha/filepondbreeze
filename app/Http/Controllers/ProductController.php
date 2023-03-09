@@ -41,7 +41,7 @@ class ProductController extends Controller
 
     foreach ($request->input('photo', []) as $file)
     {
-      $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection($this->mediaCollection);
+      $product->addMedia(storage_path('media-library/temp/' . $file))->toMediaCollection($this->mediaCollection);
     }
 
     return redirect(route('products.index'));
@@ -49,7 +49,7 @@ class ProductController extends Controller
 
   public function storeMedia(Request $request)
   {
-    $path = storage_path('tmp/uploads');
+    $path = storage_path('media-library/temp');
 
     if (!file_exists($path))
     {
@@ -57,17 +57,13 @@ class ProductController extends Controller
     }
 
     $file = $request->file('file');
-    $name = uniqid() . '_' . trim($file->getClientOriginalName());
+    $name = uniqid() . '-' . trim($file->getClientOriginalName());
     $file->move($path, $name);
 
     return response()->json([
       'name'          => $name,
       'original_name' => $file->getClientOriginalName(),
     ]);
-  }
-
-  public function show(Product $product): Response
-  {
   }
 
   public function edit(Product $product): Response
@@ -102,7 +98,7 @@ class ProductController extends Controller
     {
       if (count($media) === 0 || !in_array($file, $media))
       {
-        $product->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection($this->mediaCollection);
+        $product->addMedia(storage_path('media-library/temp/' . $file))->toMediaCollection($this->mediaCollection);
       }
     }
 
@@ -114,5 +110,9 @@ class ProductController extends Controller
     $product->delete();
 
     return redirect()->route('products.index');
+  }
+
+  public function show(Product $product)
+  {
   }
 }

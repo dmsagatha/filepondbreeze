@@ -20,9 +20,7 @@
               {{ session('danger') }}
             </div>
           @endif
-
-          {{-- <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf --}}
+          
           <form method="post" action="{{ isset($product) ? route('products.update', $product->id) : route('products.store') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
             @csrf
             {{-- add @method('put') for edit mode --}}

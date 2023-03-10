@@ -24,7 +24,7 @@ class CategoryController extends Controller
     return response()->view('admon.categories.form');
   }
   
-  public function store(CategoryRequest $request): RedirectResponse
+  /* public function store(CategoryRequest $request): RedirectResponse
   {
     $validated = $request->validated();
 
@@ -36,7 +36,7 @@ class CategoryController extends Controller
       $validated['featured_image'] = $path;
     }
 
-    // Insertar solo solicitudes que ya hayan sido validadas en StoreRequest
+    // Insertar solo solicitudes que ya hayan sido validadas en CategoryRequest
     $create = Category::create($validated);
 
     if($create) {
@@ -44,6 +44,46 @@ class CategoryController extends Controller
     }
 
     return abort(500);
+  } */
+
+  // REFERENCIA ==> http://dropzonelaravel.test/
+  public function store(Request $request): RedirectResponse
+  {
+    // Category::create($request->validated());
+
+    $request->validate([
+        'name' => 'required|min:3|unique:categories'
+    ]);
+
+    $categories = new Category();
+    $categories->name = $request['name'];
+    $categories->featured_image = $request['featured_image'];
+    $categories->save();
+
+    return to_route('categories.index')->with('success', 'Categoría creada');
+  }
+
+  public function dropzonestore(Request $request)
+  {
+    $image = $request->file('featured_image');
+    foreach ($image as $images) {
+      $imagename = uniqid() . "." . $images->getClientOriginalExtension();
+      $images->move(public_path('categories'), $imagename);
+    }
+    return $imagename;
+  }
+    
+  public function dropzone_view()
+  {
+    return view("dropzone");
+  }
+
+  public function removefile(Request $request)
+  {
+    $image = $request['removeimageName'];
+    $imagepath=public_path('categories/');
+    unlink($imagepath.$request['removeimageName']);
+    return $image;
   }
   
   public function show(Category $category)

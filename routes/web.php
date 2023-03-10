@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('categories', CategoryController::class);
+    Route::post('/dropzonestore', [CategoryController::class, 'dropzonestore'])->name('dropzone.store');
+    Route::post('/removefile', [CategoryController::class,'removefile'])->name('remove.file');
   });
   
   // FilePond

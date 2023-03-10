@@ -37,9 +37,7 @@
                       {{ $item->updated_at }}
                     </td>
                     <td class="m-5 p-5 flex flex-row items-center">
-                      @foreach ($item->media as $image)
-                        <img src="{{ $image->getUrl() }}" class="w-10 h-10 rounded-full" alt="Imagen no encontrada">
-                      @endforeach
+                      <img src="{{ isset($item) ? asset($item->featured_image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->featured_image) }}" />
                     </td>
                     <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
                       <div class="flex items-stretch space-x-1">

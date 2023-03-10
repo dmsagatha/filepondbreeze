@@ -2,7 +2,7 @@
   <x-slot:header>
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
       {{-- {{ __('Products - Dropzone') }} --}}
-      {{ isset($product) ? __('Edit Product') : __('Create Product') }}
+      {{ isset($category) ? __('Edit') : __('Create') }}
     </h2>
   </x-slot>
 
@@ -21,29 +21,36 @@
             </div>
           @endif
           
-          <form method="post" action="{{ isset($product) ? route('products.update', $product->id) : route('products.store') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
+          <form method="post" action="{{ isset($category) ? route('categories.update', $category->id) : route('categories.store') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
             @csrf
             {{-- add @method('put') for edit mode --}}
-            @isset($product)
+            @isset($category)
               @method('put')
             @endisset
 
             <div>
               <x-input-label for="name" :value="__('Name')" />
-              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" :value="$product->name ?? old('name')" autofocus autocomplete="name" />
+              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" :value="$category->name ?? old('name')" autofocus autocomplete="name" />
               <x-input-error :messages="$errors->get('name')" class="mt-2" />
-            </div>
-
-            <div>
-              <x-input-label for="description" :value="__('Description')" />
-              <x-textarea-input id="description" name="description" class="block mt-1 w-full" autocomplete="description">{{ $product->description ?? old('description') }}</x-textarea-input>
-              <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>
 
             <!-- Photo -->
             <div class="w-60 mt-4">
-              <x-input-label for="document" :value="__('Photo')" />
-              <div class="needsclick dropzone" id="document-dropzone" accept="image/*"></div>
+              <x-input-label for="featured_image" :value="__('Photo')" />
+              <label class="block mt-2">
+                <span class="sr-only">Choose image</span>
+                <input type="file" id="featured_image" name="featured_image" accept=".jpg, .jpeg, .png" class="block w-full text-sm text-slate-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-full file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-violet-50 file:text-violet-700
+                    hover:file:bg-violet-100
+                "/>
+              </label>
+              <div class="shrink-0 my-2">
+                  <img id="featured_image_preview" class="h-64 w-128 object-cover rounded-md" src="{{ isset($post) ? asset($post->featured_image) : '' }}" alt="Featured image preview" />
+              </div>
+              <x-input-error class="mt-2" :messages="$errors->get('featured_image')" />
             </div>
 
             <div class="flex items-center justify-end mt-4">
@@ -66,57 +73,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 
     <script>
-      let uploadedDocumentMap = {}
-
-      Dropzone.options.documentDropzone = {
-        url: '{{ route('products.storeMedia') }}',
-        maxFilesize: 2, // MB
-        addRemoveLinks: true,
-        // acceptedFiles: ".jpeg,.jpg,.png,.gif.,pdf",
-        acceptedFiles: 'image/*',
-        maxFiles: 1,
-        dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el documento<h3>",
-        dictRemoveFile:'Quitar',
-        // paramName: 'image',     // Cambiar 'file' por 'image'
-        headers: {
-          'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        },
-
-        success: function(file, response) {
-          $('form').append('<input type="hidden" name="photo[]" value="' + response.name + '">')
-          uploadedDocumentMap[file.name] = response.name
-        },
-
-        removedfile: function(file) {
-          file.previewElement.remove()
-          var name = ''
-          if (typeof file.file_name !== 'undefined') {
-              name = file.file_name
-          } else {
-              name = uploadedDocumentMap[file.name]
-          }
-          $('form').find('input[name="photo[]"][value="' + name + '"]').remove()
-        },
-
-        init: function() {
-          @if (isset($photos))
-            var files = {!! json_encode($photos) !!}
-            for (var i in files) {
-              var file = files[i]
-              console.log(file);
-
-              file = {
-                ...file,
-                width: 226,
-                height: 324
-              }
-              this.options.addedfile.call(this, file)
-              this.options.thumbnail.call(this, file, file.original_url)
-              file.previewElement.classList.add('dz-complete')
-
-              $('form').append('<input type="hidden" name="photo[]" value="' + file.file_name + '">')
-            }
-          @endif
+      // create onchange event listener for featured_image input
+      document.getElementById('featured_image').onchange = function(evt) {
+        const [file] = this.files
+        if (file) {
+          // if there is an image, create a preview in featured_image_preview
+          document.getElementById('featured_image_preview').src = URL.createObjectURL(file)
         }
       }
     </script>

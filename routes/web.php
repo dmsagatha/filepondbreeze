@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
@@ -35,6 +36,9 @@ Route::middleware('auth')->group(function () {
     // https://laraveldaily.teachable.com/courses/1324478/lectures/30707684
     Route::resource('products', ProductController::class);
     Route::post('/store/media', [ProductController::class, 'storeMedia'])->name('products.storeMedia');
+
+
+    Route::resource('categories', CategoryController::class);
   });
   
   // FilePond

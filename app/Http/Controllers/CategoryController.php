@@ -66,9 +66,11 @@ class CategoryController extends Controller
   public function dropzonestore(Request $request)
   {
     $image = $request->file('featured_image');
+
     foreach ($image as $images) {
       $imagename = uniqid() . "." . $images->getClientOriginalExtension();
-      $images->move(public_path('categories'), $imagename);
+      // $images->move(storage_path('app/public/categories'), $imagename);
+      $images->storeAs('categories', $imagename);
     }
     return $imagename;
   }
@@ -81,8 +83,9 @@ class CategoryController extends Controller
   public function removefile(Request $request)
   {
     $image = $request['removeimageName'];
-    $imagepath=public_path('categories/');
+    $imagepath = storage_path('categories/');
     unlink($imagepath.$request['removeimageName']);
+    
     return $image;
   }
   

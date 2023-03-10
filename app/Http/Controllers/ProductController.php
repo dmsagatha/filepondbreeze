@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -27,16 +28,11 @@ class ProductController extends Controller
 
   /* https://cdn.fs.teachablecdn.com/89p5visTTwO2N0v4O6OS
   https://cdn.fs.teachablecdn.com/LU4kLmI0QhWeVIJIFGeT --> 4' */
-  public function store(Request $request): RedirectResponse
+  public function store(ProductRequest $request): RedirectResponse
   {
-    $this->validate($request, [
-      'name' => 'required|unique:products',
-      'description'  => 'required'
-    ]);
-
     $product = Product::create([
       'name'        => $request->name,
-      'description' => $request->description,
+      'description' => $request->description
     ]);
 
     foreach ($request->input('photo', []) as $file)
@@ -74,12 +70,9 @@ class ProductController extends Controller
     ]);
   }
 
-  public function update(Product $product, Request $request): RedirectResponse
+  public function update(Product $product, ProductRequest $request): RedirectResponse
   {
-    $product->update([
-      'name'        => $request->name,
-      'description' => $request->description,
-    ]);
+    $product->update($request->all());
 
     if (count($product->photos) > 0)
     {

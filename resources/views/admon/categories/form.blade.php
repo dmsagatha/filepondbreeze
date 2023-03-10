@@ -1,7 +1,6 @@
 <x-app-layout>
   <x-slot:header>
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-      {{-- {{ __('Products - Dropzone') }} --}}
       {{ isset($category) ? __('Edit') : __('Create') }}
     </h2>
   </x-slot>
@@ -23,7 +22,6 @@
           
           <form method="post" action="{{ isset($category) ? route('categories.update', $category->id) : route('categories.store') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
             @csrf
-            {{-- add @method('put') for edit mode --}}
             @isset($category)
               @method('put')
             @endisset
@@ -40,15 +38,15 @@
               <label class="block mt-2">
                 <span class="sr-only">Choose image</span>
                 <input type="file" id="featured_image" name="featured_image" accept=".jpg, .jpeg, .png" class="block w-full text-sm text-slate-500
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
-                    file:text-sm file:font-semibold
-                    file:bg-violet-50 file:text-violet-700
-                    hover:file:bg-violet-100
+                  file:mr-4 file:py-2 file:px-4
+                  file:rounded-full file:categoryborder-0
+                  file:text-sm file:font-semibold
+                  file:bg-violet-50 file:text-violet-700
+                  hover:file:bg-violet-100
                 "/>
               </label>
               <div class="shrink-0 my-2">
-                  <img id="featured_image_preview" class="h-64 w-128 object-cover rounded-md" src="{{ isset($post) ? asset($post->featured_image) : '' }}" alt="Featured image preview" />
+                <img id="featured_image_preview" class="h-64 w-128 object-cover rounded-md" src="{{ isset($category) ? asset($category->featured_image) : '' }}" alt="Featured image preview" />
               </div>
               <x-input-error class="mt-2" :messages="$errors->get('featured_image')" />
             </div>
@@ -65,13 +63,9 @@
   </div>
 
   @push('styles')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
   @endpush
 
   @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
-
     <script>
       // create onchange event listener for featured_image input
       document.getElementById('featured_image').onchange = function(evt) {

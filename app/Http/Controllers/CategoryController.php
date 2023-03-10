@@ -30,7 +30,7 @@ class CategoryController extends Controller
 
     if ($request->hasFile('featured_image')) {
       // Poner la imagen en el almacenamiento público
-      $file = Storage::disk('public')->put('images/categories/featured-images', request()->file('featured_image'), 'public');
+      $file = Storage::disk('public')->put('categories', request()->file('featured_image'), 'public');
       // Obtener la ruta de la imagen en la url
       $path = Storage::url($file);
       $validated['featured_image'] = $path;
@@ -46,19 +46,52 @@ class CategoryController extends Controller
     return abort(500);
   }
   
-  public function show(Category $category): Response
+  public function show(Category $category)
   {
   }
   
   public function edit(Category $category): Response
   {
+    return response()->view('admon.categories.form', [
+      'category' => $category
+    ]);
   }
   
-  public function update(Request $request, Category $category): RedirectResponse
+  public function update(CategoryRequest $request, Category $category): RedirectResponse
   {
+    $validated = $request->validated();
+
+    if ($request->hasFile('featured_image')) {
+      // Obtenga la ruta de la imagen actual y reemplace la ruta de almacenamiento con la ruta pública
+      $currentImage = str_replace('/storage', '/public', $category->featured_image);
+      // Eliminar imagen actual
+      Storage::delete($currentImage);
+
+      $file = Storage::disk('public')->put('categories', request()->file('featured_image'), 'public');
+      $path = Storage::url($file);
+      $validated['featured_image'] = $path;
+    }
+
+    $update = $category->update($validated);
+
+    if($update) {
+      return to_route('categories.index')->with('success', 'Categoría actualizada');
+    }
+
+    return abort(500);
   }
   
   public function destroy(Category $category): RedirectResponse
   {
+    $currentImage = str_replace('/storage', '/public', $category->featured_image);
+    Storage::delete($currentImage);
+    
+    $delete = $category->delete();
+
+    if($delete) {
+      return to_route('categories.index')->with('success', 'Categoría eliminada');
+    }
+
+    return abort(500);
   }
 }

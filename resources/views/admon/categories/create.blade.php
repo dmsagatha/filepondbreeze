@@ -88,10 +88,10 @@
   </script> --}}
 
     <script>
-      var newimage = [];
+      let newimage = [];
       Dropzone.autoDiscover = false;
 
-      var myDropzone = new Dropzone("#dropzone", {
+      let myDropzone = new Dropzone("#dropzone", {
         url: '{{ route('dropzone.store') }}',
         // type='post',
         headers: {
@@ -103,10 +103,11 @@
         acceptedFiles: 'image/*',
         paramName: 'featured_image', // Cambiar 'file' por 'featured_image'
         addRemoveLinks: true,
-        dictDefaultMessage: "<h3 class='sbold'>Drop files here or click to upload document(s)<h3>",
+        dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el documento<h3>",
+        dictRemoveFile:'Quitar',
 
         removedfile: function(file) {
-          var removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
+          let removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
           $.ajax({
             type: 'POST',
             url: "{{ route('remove.file') }}",

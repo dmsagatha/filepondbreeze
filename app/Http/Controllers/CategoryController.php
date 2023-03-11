@@ -45,8 +45,7 @@ class CategoryController extends Controller
 
     return abort(500);
   } */
-
-  // REFERENCIA ==> http://dropzonelaravel.test/
+  
   public function store(Request $request): RedirectResponse
   {
     $request->validate([
@@ -81,7 +80,7 @@ class CategoryController extends Controller
   public function removefile(Request $request)
   {
     $image = $request['removeimageName'];
-    $imagepath = storage_path('categories/');
+    $imagepath = storage_path('app/public/categories/');
     unlink($imagepath.$request['removeimageName']);
     
     return $image;
@@ -103,36 +102,25 @@ class CategoryController extends Controller
         'featured_image' => explode(',', $category->featured_image)
       ]);
     }
-
-    /* return response()->view('admon.categories.form', [
-      'category' => $category
-    ]); */
   }
   
   // public function update(CategoryRequest $request, Category $category): RedirectResponse
-  public function update($id, Request $request): RedirectResponse
+  public function update(Request $request, $id): RedirectResponse
   {
     $category = Category::find($id);
-    $validated = $request->validated();
 
-    if ($request->hasFile('featured_image')) {
-      // Obtenga la ruta de la imagen actual y reemplace la ruta de almacenamiento con la ruta pública
-      $currentImage = str_replace('/storage', '/public', $category->featured_image);
-      // Eliminar imagen actual
-      Storage::delete($currentImage);
+    if (!is_null($category)) {
+      $request->validate([
+        'name' => 'required|min:3|unique:categories,name,'.$category->id
+      ]);
 
-      $file = Storage::disk('public')->put('categories', request()->file('featured_image'), 'public');
-      $path = Storage::url($file);
-      $validated['featured_image'] = $path;
-    }
+      $category->name = $request['name'];
+      $category->save();
 
-    $update = $category->update($validated);
-
-    if($update) {
       return to_route('categories.index')->with('success', 'Categoría actualizada');
+    } else {
+      return abort(500);
     }
-
-    return abort(500);
   }
   
   public function destroy(Category $category): RedirectResponse

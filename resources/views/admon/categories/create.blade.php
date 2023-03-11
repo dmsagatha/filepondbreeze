@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot:header>
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-      {{ __('Products - Dropzone') }}
+      {{ isset($category) ? __('Edit') : __('Create') }}
     </h2>
   </x-slot>
 
@@ -20,40 +20,46 @@
             </div>
           @endif
 
-          <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+          <form method="post" action="{{ route('categories.store') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
             @csrf
 
             <div>
               <x-input-label for="name" :value="__('Name')" />
-              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" value="{{ old("name", $product->name) }}" autofocus autocomplete="name" />
+              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" :value="$category->name ?? old('name')"
+                autofocus autocomplete="name" />
               <x-input-error :messages="$errors->get('name')" class="mt-2" />
-            </div>
-
-            <div>
-              <x-input-label for="name" :value="__('Nombre')" />
-              <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus
-                autocomplete="name" />
-              <x-input-error :messages="$errors->get('name')" class="mt-2" />
-            </div>
-
-            <div>
-              <x-input-label for="description" :value="__('Descripción')" />
-              <x-text-input id="description" class="block mt-1 w-full" type="text" name="description"
-                :value="old('description')" autofocus autocomplete="description" />
-              <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>
 
             <!-- Photo -->
-            <div class="mt-4">
-              <label for="document">Photo</label>
-              <div class="needsclick dropzone" id="document-dropzone">
+            <div class="w-60 mt-4">
+              <x-input-label for="featured_image" :value="__('Photo')" />
+              {{-- <label for="document">{{ __('Photo') }}</label> --}}
 
-              </div>
+              <div class="dropzone" id="dropzone"></div>
+              <input type="hidden" readonly class="newimage" name="featured_image" value="">
             </div>
+
+            {{-- <div class="w-60 mt-4">
+            <x-input-label for="featured_image" :value="__('Photo')" />
+            <label class="block mt-2">
+              <span class="sr-only">Choose image</span>
+              <input type="file" id="featured_image" name="featured_image" accept="image/*" class="block w-full text-sm text-slate-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-full file:categoryborder-0
+                file:text-sm file:font-semibold
+                file:bg-violet-50 file:text-violet-700
+                hover:file:bg-violet-100
+              "/>
+            </label>
+            <div class="shrink-0 my-2">
+              <img id="featured_image_preview" class="h-64 w-128 object-cover rounded-md" src="{{ isset($category) ? asset($category->featured_image) : '' }}" alt="Featured image preview" />
+            </div>
+            <x-input-error class="mt-2" :messages="$errors->get('featured_image')" />
+          </div> --}}
 
             <div class="flex items-center justify-end mt-4">
               <x-primary-button class="ml-4">
-                {{ __('Guardar Datos') }}
+                {{ __('Save') }}
               </x-primary-button>
             </div>
           </form>
@@ -63,67 +69,76 @@
   </div>
 
   @push('styles')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
   @endpush
 
   @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+    <script src="{{ asset('js/dropzone.min.js') }}"></script>
+
+    {{-- <script>
+    // create onchange event listener for featured_image input
+    document.getElementById('featured_image').onchange = function(evt) {
+      const [file] = this.files
+      if (file) {
+        // if there is an image, create a preview in featured_image_preview
+        document.getElementById('featured_image_preview').src = URL.createObjectURL(file)
+      }
+    }
+  </script> --}}
 
     <script>
-      let uploadedDocumentMap = {}
+      var newimage = [];
+      Dropzone.autoDiscover = false;
 
-      Dropzone.options.documentDropzone = {
-        url: '{{ route('products.storeMedia') }}',
-        maxFilesize: 2, // MB
-        addRemoveLinks: true,
-        // acceptedFiles: ".jpeg,.jpg,.png,.gif.,pdf",
-        acceptedFiles: 'image/*',
-	      maxFiles: 1,
-        dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el documento<h3>",
-        dictRemoveFile:'Quitar',
-        // paramName: 'image',     // Cambiar 'file' por 'image'
+      var myDropzone = new Dropzone("#dropzone", {
+        url: '{{ route('dropzone.store') }}',
+        // type='post',
         headers: {
           'X-CSRF-TOKEN': "{{ csrf_token() }}"
         },
-
-        success: function(file, response) {
-          $('form').append('<input type="hidden" name="photo[]" value="' + response.name + '">')
-          uploadedDocumentMap[file.name] = response.name
-        },
+        // url:"/dropzonestore",
+        parallelUploads: 1,
+        uploadMultiple: true,
+        acceptedFiles: 'image/*',
+        paramName: 'featured_image', // Cambiar 'file' por 'featured_image'
+        addRemoveLinks: true,
+        dictDefaultMessage: "<h3 class='sbold'>Drop files here or click to upload document(s)<h3>",
 
         removedfile: function(file) {
-          file.previewElement.remove()
-          var name = ''
-          if (typeof file.file_name !== 'undefined') {
-              name = file.file_name
-          } else {
-              name = uploadedDocumentMap[file.name]
-          }
-          $('form').find('input[name="photo[]"][value="' + name + '"]').remove()
-        },
-
-        init: function() {
-          @if (isset($photos))
-            var files = {!! json_encode($photos) !!}
-            for (var i in files) {
-              var file = files[i]
-              console.log(file);
-
-              file = {
-                ...file,
-                width: 226,
-                height: 324
+          var removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
+          $.ajax({
+            type: 'POST',
+            url: "{{ route('remove.file') }}",
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+              removeimageName: removeimageName
+            },
+            success: function(data) {
+              console.log(data);
+              for (var i = 0; i < newimage.length; i++) {
+                if (newimage[i] === data) {
+                  newimage.splice(i, 1);
+                }
               }
-              this.options.addedfile.call(this, file)
-              this.options.thumbnail.call(this, file, file.original_url)
-              file.previewElement.classList.add('dz-complete')
-
-              $('form').append('<input type="hidden" name="photo[]" value="' + file.file_name + '">')
+              $(".newimage").val(newimage);
             }
-          @endif
+          });
+          var _ref;
+          return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) :
+            void 0;
+        },
+        success: function(file, response) {
+          console.log(file);
+          newimage.push(response);
+          console.log(newimage);
+          $(".newimage").val(newimage);
+          $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
+          $(file.previewTemplate).find('.dz-filename span').html(response);
         }
-      }
+      });
     </script>
   @endpush
-</x-app-layout>
+</x-guest-layout>

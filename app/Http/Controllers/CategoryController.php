@@ -21,7 +21,7 @@ class CategoryController extends Controller
   
   public function create(): Response
   {
-    return response()->view('admon.categories.form');
+    return response()->view('admon.categories.create');
   }
   
   /* public function store(CategoryRequest $request): RedirectResponse
@@ -49,8 +49,6 @@ class CategoryController extends Controller
   // REFERENCIA ==> http://dropzonelaravel.test/
   public function store(Request $request): RedirectResponse
   {
-    // Category::create($request->validated());
-
     $request->validate([
         'name' => 'required|min:3|unique:categories'
     ]);
@@ -93,15 +91,28 @@ class CategoryController extends Controller
   {
   }
   
-  public function edit(Category $category): Response
+  // public function edit(Category $category): Response
+  public function edit($id): Response
   {
-    return response()->view('admon.categories.form', [
+    $category = Category::find($id);
+    // dd($category);
+
+    if (!is_null($category)) {
+      return response()->view('admon.categories.edit', [
+        'category' => $category,
+        'featured_image' => explode(',', $category->featured_image)
+      ]);
+    }
+
+    /* return response()->view('admon.categories.form', [
       'category' => $category
-    ]);
+    ]); */
   }
   
-  public function update(CategoryRequest $request, Category $category): RedirectResponse
+  // public function update(CategoryRequest $request, Category $category): RedirectResponse
+  public function update($id, Request $request): RedirectResponse
   {
+    $category = Category::find($id);
     $validated = $request->validated();
 
     if ($request->hasFile('featured_image')) {

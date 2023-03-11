@@ -38,7 +38,21 @@ Route::middleware('auth')->group(function () {
     Route::post('/store/media', [ProductController::class, 'storeMedia'])->name('products.storeMedia');
 
 
-    Route::resource('categories', CategoryController::class);
+    // Route::resource('categories', CategoryController::class);
+
+
+
+  Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+  Route::get('/categories/crear', [CategoryController::class, 'create'])->name('categories.create');
+  Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+  Route::get('/categories/{id}/editar', [CategoryController::class, 'edit'])->name('categories.edit');
+  Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+  Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+  Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+
+
+
     Route::post('/dropzonestore', [CategoryController::class, 'dropzonestore'])->name('dropzone.store');
     Route::post('/removefile', [CategoryController::class,'removefile'])->name('remove.file');
   });

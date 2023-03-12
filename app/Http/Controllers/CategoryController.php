@@ -98,10 +98,10 @@ class CategoryController extends Controller
   {
   }
   
-  // public function edit(Category $category): Response
-  public function edit($id): Response
+  // public function edit($id): Response
+  public function edit(Category $category): Response
   {
-    $category = Category::find($id);
+    // $category = Category::find($id);
     // dd($category);
 
     if (!is_null($category)) {
@@ -112,10 +112,10 @@ class CategoryController extends Controller
     }
   }
   
-  // public function update(CategoryRequest $request, Category $category): RedirectResponse
-  public function update(Request $request, $id): RedirectResponse
+  // public function update(Request $request, $id): RedirectResponse
+  public function update(CategoryRequest $request, Category $category): RedirectResponse
   {
-    $category = Category::find($id);
+    /* $category = Category::find($id);
 
     if (!is_null($category)) {
       $request->validate([
@@ -128,7 +128,11 @@ class CategoryController extends Controller
       return to_route('categories.index')->with('success', 'Categoría actualizada');
     } else {
       return abort(500);
-    }
+    } */
+
+    $category->update($request->all());
+
+    return to_route('categories.index')->with('success', 'Categoría actualizada');
   }
   
   public function destroy(Category $category): RedirectResponse
@@ -141,6 +145,6 @@ class CategoryController extends Controller
       unlink($imagen_path);
     }
 
-    return to_route('categories.index')->with('success', 'Categoría eliminada');
+    return redirect(route('categories.index'))->with('success', 'Categoría eliminada');
   }
 }

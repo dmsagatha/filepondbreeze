@@ -45,7 +45,7 @@
                       <div class="flex items-stretch space-x-1">
                         <a href="#" class="border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-md">{{ __('View') }}</a>
 
-                        <a href="{{ route('categories.edit', $item->id) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
+                        <a href="{{ route('categories.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
 
                         {{-- add delete button using form tag --}}
                         <form method="post" action="{{ route('categories.destroy', $item) }}" class="inline">

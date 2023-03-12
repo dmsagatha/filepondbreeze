@@ -2,9 +2,9 @@
   <x-slot:header>
     <div class="flex justify-between">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Products') }}
+        {{ __('Categories') }}
       </h2>
-      <a href="{{ route('products.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Create') }}</a>
+      <a href="{{ route('categories.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Create') }}</a>
     </div>
   </x-slot>
 
@@ -13,12 +13,11 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-4 text-gray-900">
-          @if ($products->count())
+          @if ($categories->count())
             <table class="border-collapse table-auto w-full text-sm">
               <thead>
                 <tr>
                   <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Name') }}</th>
-                  <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Description') }}</th>
                   <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Created At') }}</th>
                   <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Updated At') }}</th>
                   <th class="border-b font-medium p-2 pl-8 pt-0 pb-3 text-slate-400 text-left">{{ __('Photo') }}</th>
@@ -26,13 +25,10 @@
                 </tr>
               </thead>
               <tbody class="bg-white">
-                @foreach ($products as $item)
+                @foreach ($categories as $item)
                   <tr>
                     <td class="border-b border-slate-100 dark:border-slate-700 p-2 pl-8 text-slate-500 dark:text-slate-400">
                       {{ $item->name }}
-                    </td>
-                    <td class="border-b border-slate-100 dark:border-slate-700 p-2 pl-8 text-slate-500 dark:text-slate-400">
-                      {{ $item->description }}
                     </td>
                     <td class="border-b border-slate-100 dark:border-slate-700 p-2 pl-8 text-slate-500 dark:text-slate-400">
                       {{ $item->created_at }}
@@ -41,18 +37,18 @@
                       {{ $item->updated_at }}
                     </td>
                     <td class="m-5 p-5 flex flex-row items-center">
-                      @foreach ($item->media as $image)
-                        <img src="{{ $image->getUrl() }}" class="w-10 h-10 rounded-full" alt="Imagen no encontrada">
-                      @endforeach
+                      <img src="{{ isset($item) ? asset('/categories/'.$item->featured_image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->featured_image) }}" />
+
+                      {{-- <img src="{{ asset('/categories/'.$item->featured_image) }}" title="{{ ($item->featured_image) }}" class="w-10 h-10 px-1 rounded-full" alt=""> --}}
                     </td>
-                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 px-2 text-slate-500 dark:text-slate-400">
                       <div class="flex items-stretch space-x-1">
                         <a href="#" class="border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-md">{{ __('View') }}</a>
 
-                        <a href="{{ route('products.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
+                        <a href="{{ route('categories.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
 
                         {{-- add delete button using form tag --}}
-                        <form method="post" action="{{ route('products.destroy', $item) }}" class="inline">
+                        <form method="post" action="{{ route('categories.destroy', $item) }}" class="inline">
                           @csrf @method('delete')
 
                           <button

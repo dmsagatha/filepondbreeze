@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
@@ -29,12 +30,28 @@ Route::middleware('auth')->group(function () {
       'index', 'store'
     ]);
 
+    // PRODUCTS
     // Dropzone and Laravel Media Library
     // https://github.com/junicotandiago198/crud-laravel-dropzone
     // https://spatie.be/docs/laravel-medialibrary/v10/installation-setup
     // https://laraveldaily.teachable.com/courses/1324478/lectures/30707684
     Route::resource('products', ProductController::class);
     Route::post('/store/media', [ProductController::class, 'storeMedia'])->name('products.storeMedia');
+
+    // CATEGORIES
+    Route::resource('categories', CategoryController::class);
+    // Resource
+    /* Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/crear', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{id}/editar', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy'); */
+    // Dropzone
+    Route::post('/dropzonestore', [CategoryController::class, 'dropzonestore'])->name('dropzone.store');
+    Route::post('/removefile', [CategoryController::class,'removefile'])->name('remove.file');
+    Route::get('/get-category-image/{id}',[CategoryController::class, 'getImages'])->name('getCategoryImage');
   });
   
   // FilePond

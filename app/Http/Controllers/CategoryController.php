@@ -47,18 +47,25 @@ class CategoryController extends Controller
     return abort(500);
   } */
   
-  public function store(Request $request): RedirectResponse
+  public function store(CategoryRequest $request): RedirectResponse
   {
-    $request->validate([
+    /* $request->validate([
         'name' => 'required|min:3|unique:categories'
     ]);
 
     $categories = new Category();
     $categories->name = $request['name'];
     $categories->featured_image = $request['featured_image'];
-    $categories->save();
+    $categories->save(); */
 
-    return to_route('categories.index')->with('success', 'Categoría creada');
+    /* Category::create([
+      'name'           => $request['name'],
+      'featured_image' =>  $request['featured_image']
+    ]); */
+
+    Category::create($request->all());
+
+    return redirect(route('categories.index'))->with('success', 'Categoría creada');
   }
 
   public function dropzonestore(Request $request)
@@ -89,13 +96,6 @@ class CategoryController extends Controller
   
   public function show(Category $category)
   {
-  }
-
-  public function getImages($id)
-  {
-    $category = Category::findOrFail($id);
-
-    return response()->json($category->featured_image);
   }
   
   // public function edit(Category $category): Response

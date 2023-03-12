@@ -23,7 +23,7 @@ class CategoryRequest extends FormRequest
 
     return [
       'name'  => $name,
-      'featured_image' => 'required|image|max:1024|mimes:jpg,jpeg,png'
+      // 'featured_image' => 'required|image|max:1024|mimes:jpg,jpeg,png'
     ];
   }
 }

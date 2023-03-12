@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -89,6 +90,13 @@ class CategoryController extends Controller
   public function show(Category $category)
   {
   }
+
+  public function getImages($id)
+  {
+    $category = Category::findOrFail($id);
+
+    return response()->json($category->featured_image);
+  }
   
   // public function edit(Category $category): Response
   public function edit($id): Response
@@ -125,15 +133,14 @@ class CategoryController extends Controller
   
   public function destroy(Category $category): RedirectResponse
   {
-    $currentImage = str_replace('/storage', '/public', $category->featured_image);
-    Storage::delete($currentImage);
-    
-    $delete = $category->delete();
+    $category->delete();
+    $imagen_path = public_path('storage/categories/'.$category->featured_image);
+    // $imagen_path = storage_path('app/public/categories/'.$category->featured_image);
 
-    if($delete) {
-      return to_route('categories.index')->with('success', 'Categoría eliminada');
+    if (File::exists($imagen_path)) {
+      unlink($imagen_path);
     }
 
-    return abort(500);
+    return to_route('categories.index')->with('success', 'Categoría eliminada');
   }
 }

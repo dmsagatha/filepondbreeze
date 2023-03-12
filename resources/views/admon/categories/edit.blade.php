@@ -5,10 +5,10 @@
     </h2>
   </x-slot>
 
-  <div class="py-4">
+  <div class="py-2">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6 text-gray-900">
+        <div class="py-1 px-4 text-gray-900">
           @if (session()->has('success'))
             <div class="bg-green-400 text-sm text-green-700 m-2 p-2">
               {{ session('success') }}
@@ -76,33 +76,133 @@
   @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{ asset('js/dropzone.min.js') }}"></script>
-
-    <script type="text/javascript">
+    
+    <script>
       let newimage = [];
-
       Dropzone.autoDiscover = false;
+
       let myDropzone = new Dropzone("#dropzone", {
         url: '{{ route('dropzone.store') }}',
-        // type='post',
-        headers: {
-          'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        },
-        // url:"/dropzonestore",
+        maxFilesize: 2, // MB
+        maxFiles: 1,
+        addRemoveLinks: true,
+        acceptedFiles: 'image/*',
         parallelUploads: 1,
         uploadMultiple: true,
-        // acceptedFiles: '.png,.jpg,.jpeg',
-        acceptedFiles: 'image/*',
-        addRemoveLinks: true,
         paramName: 'featured_image', // Cambiar 'file' por 'featured_image'
         dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el documento<h3>",
         dictRemoveFile:'Quitar',
+        headers: {
+          'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
 
-        success: function(data, response) {
-            newimage.push(response);
-            console.log(newimage);
-            $(".newimage").val(newimage);
+        success: function(file, response) {
+          console.log(file);
+          newimage.push(response);
+          console.log(newimage);
+          $(".newimage").val(newimage);
+          $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
+          $(file.previewTemplate).find('.dz-filename span').html(response);
+        },
 
+        removedfile: function(file) {
+          let removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
+
+          $.ajax({
+            type: 'POST',
+            url: "{{ route('remove.file') }}",
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+              removeimageName: removeimageName
+            },
+            success: function(data) {
+              console.log(data);
+              for (var i = 0; i < newimage.length; i++) {
+                if (newimage[i] === data) {
+                  newimage.splice(i, 1);
+                }
+              }
+              $(".newimage").val(newimage);
+            }
+          });
+          var _ref;
+          return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+        },
+
+        
+        /* init: function() 
+        {
+            this.on("success", function(file, response)
+            {
+                var path = "storage/categories/" + response;
+                $("#user-avatar").attr("src", path );
+            });
+        }, */
+        
+        
+    init: function () {
+      @if(isset($category) && $category->featured_image)
+        var files =
+          {!! json_encode($category->featured_image) !!}
+        for (var i in files) {
+          var file = files[i]
+          this.options.addedfile.call(this, file)
+          file.previewElement.classList.add('dz-complete')
+          $('form').append('<input type="hidden" name="featured_image[]" value="' + file.file_name + '">')
         }
+      @endif
+    }
+
+        /* init: function() {
+          if (document.querySelector('[name="featured_image"]').value.trim()) { // si hay algo
+            const imagenPublicada = {}
+            imagenPublicada.size = 1234;
+            imagenPublicada.name = document.querySelector('[name="featured_image"]').value;
+
+
+            this.options.addedfile.call(this, imagenPublicada);
+            this.options.thumbnail.call(this, imagenPublicada, "/public/storage/categories/"+imagenPublicada.name);
+            imagenPublicada.previewElement.classList.add("dz-success", "dz-complete");
+          }
+        } */
+
+        /* init:function (){
+          $.ajax({
+            url: "{{ route('getCategoryImage', $category->id) }}",
+            type: "get",
+            datatype: 'json',
+            success: function (data) {
+              $.each(data,function (key,value) {
+                let mockFile = {name:value.id,size:value.original_name};
+                drop.emit("addedfile",mockFile);
+                drop.emit("thumbnail",mockFile,value.path);
+                drop.emit("complete",mockFile);
+              })
+            }
+          });
+        } */
+
+        /* init: function() {
+          @if (isset($category->featured_image))
+            var files = {!! json_encode($featured_image) !!}
+            for (var i in files) {
+              var file = files[i]
+              console.log(file);
+              file = {
+                ...file,
+                width: 226,
+                height: 324
+              }
+              this.options.addedfile.call(this, file)
+              this.options.thumbnail.call(this, file, file.original_url)
+              file.previewElement.classList.add('dz-complete')
+
+              $('form').append('<input type="hidden" name="featured_image[]" value="' + file.file_name + '">')
+            }
+          @endif
+        } */
       });
     </script>
   @endpush

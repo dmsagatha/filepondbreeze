@@ -55,6 +55,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/dropzonestore', [CategoryController::class, 'dropzonestore'])->name('dropzone.store');
     Route::post('/removefile', [CategoryController::class,'removefile'])->name('remove.file');
+    Route::get('/get-category-image/{id}',[CategoryController::class, 'getImages'])->name('getCategoryImage');
   });
   
   // FilePond

@@ -58,13 +58,13 @@
     <script src="{{ asset('js/dropzone.min.js') }}"></script>
 
     <script>
-      var uploadedDocumentMap = {}
-      let newimage = []
-      Dropzone.autoDiscover = false
+      let newimage = [];
+      Dropzone.autoDiscover = false;
 
       let myDropzone = new Dropzone("#dropzone", {
         url: '{{ route('dropzone.store') }}',
         maxFilesize: 2, // MB
+        maxFiles: 1,
         addRemoveLinks: true,
         acceptedFiles: 'image/*',
         parallelUploads: 1,

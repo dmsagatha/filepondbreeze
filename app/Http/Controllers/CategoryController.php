@@ -21,7 +21,8 @@ class CategoryController extends Controller
   
   public function create(): Response
   {
-    return response()->view('admon.categories.create');
+    // return response()->view('admon.categories.create');
+    return response()->view('admon.categories.form');
   }
   
   /* public function store(CategoryRequest $request): RedirectResponse
@@ -104,7 +105,8 @@ class CategoryController extends Controller
     // dd($category);
 
     if (!is_null($category)) {
-      return response()->view('admon.categories.edit', [
+      // return response()->view('admon.categories.edit', [
+      return response()->view('admon.categories.form', [
         'category' => $category,
         'featured_image' => explode(',', $category->featured_image)
       ]);

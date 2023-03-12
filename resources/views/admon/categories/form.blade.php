@@ -33,32 +33,31 @@
             </div>
 
             <!-- Photo -->
-            <div class="w-60 mt-4">
+            {{-- <div class="w-60 mt-4">
               <x-input-label for="featured_image" :value="__('Photo')" />
-              {{-- <label for="document">{{ __('Photo') }}</label> --}}
               
               <div class="dropzone" id="dropzone"></div>
               <input type="hidden" readonly class="newimage" name="featured_image" value="">
-            </div>
-
-
-            {{-- <div class="w-60 mt-4">
-              <x-input-label for="featured_image" :value="__('Photo')" />
-              <label class="block mt-2">
-                <span class="sr-only">Choose image</span>
-                <input type="file" id="featured_image" name="featured_image" accept="image/*" class="block w-full text-sm text-slate-500
-                  file:mr-4 file:py-2 file:px-4
-                  file:rounded-full file:categoryborder-0
-                  file:text-sm file:font-semibold
-                  file:bg-violet-50 file:text-violet-700
-                  hover:file:bg-violet-100
-                "/>
-              </label>
-              <div class="shrink-0 my-2">
-                <img id="featured_image_preview" class="h-64 w-128 object-cover rounded-md" src="{{ isset($category) ? asset($category->featured_image) : '' }}" alt="Featured image preview" />
-              </div>
-              <x-input-error class="mt-2" :messages="$errors->get('featured_image')" />
             </div> --}}
+
+            <!-- Photo -->
+            <div class="w-60 mt-4">
+              @if (!isset($category->featured_image))
+                <x-input-label for="featured_image" :value="__('Photo')" />
+
+                <div class="dropzone" id="dropzone"></div>
+                <input type="hidden" readonly class="newimage" name="featured_image" value="">
+              @else
+                <div class="col-md-8 mb-4">
+                  <div class="dropzone" id="dropzone">
+                    @foreach ($featured_image as $item)
+                      <img class="" src="{{ asset('categories/' . $item) }}" class="img-thumbnail"
+                        height="90px" width="150px" />
+                    @endforeach
+                  </div>
+                </div>
+              @endif
+            </div>
 
             <div class="flex items-center justify-end mt-4">
               <x-primary-button class="ml-4">
@@ -79,37 +78,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{ asset('js/dropzone.min.js') }}"></script>
 
-    {{-- <script>
-      // create onchange event listener for featured_image input
-      document.getElementById('featured_image').onchange = function(evt) {
-        const [file] = this.files
-        if (file) {
-          // if there is an image, create a preview in featured_image_preview
-          document.getElementById('featured_image_preview').src = URL.createObjectURL(file)
-        }
-      }
-    </script> --}}
-
     <script>
-      var newimage = [];
+      let newimage = [];
       Dropzone.autoDiscover = false;
-  
-      var myDropzone = new Dropzone("#dropzone", {
+
+      let myDropzone = new Dropzone("#dropzone", {
         url: '{{ route('dropzone.store') }}',
-        // type='post',
+        maxFilesize: 2, // MB
+        maxFiles: 1,
+        addRemoveLinks: true,
+        acceptedFiles: 'image/*',
+        parallelUploads: 1,
+        uploadMultiple: true,
+        paramName: 'featured_image', // Cambiar 'file' por 'featured_image'
+        dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el documento<h3>",
+        dictRemoveFile:'Quitar',
         headers: {
           'X-CSRF-TOKEN': "{{ csrf_token() }}"
         },
-        // url:"/dropzonestore",
-        parallelUploads: 1,
-        uploadMultiple: true,
-        acceptedFiles: 'image/*',
-        paramName: 'featured_image',     // Cambiar 'file' por 'featured_image'
-        addRemoveLinks: true,
-        dictDefaultMessage: "<h3 class='sbold'>Drop files here or click to upload document(s)<h3>",
+
+        success: function(file, response) {
+          console.log(file);
+          newimage.push(response);
+          console.log(newimage);
+          $(".newimage").val(newimage);
+          $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
+          $(file.previewTemplate).find('.dz-filename span').html(response);
+        },
 
         removedfile: function(file) {
-          var removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
+          let removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
           $.ajax({
             type: 'POST',
             url: "{{ route('remove.file') }}",
@@ -130,16 +128,19 @@
             }
           });
           var _ref;
-          return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) :
-              void 0;
+          return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
         },
-        success: function(file, response) {
-          console.log(file);
-          newimage.push(response);
-          console.log(newimage);
-          $(".newimage").val(newimage);
-          $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
-          $(file.previewTemplate).find('.dz-filename span').html(response);
+
+        init: function () {
+          @if(isset($category) && $category->featured_image)
+            var files = {!! json_encode($category->featured_image) !!}
+            for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="featured_image[]" value="' + file.file_name + '">')
+            }
+          @endif
         }
       });
     </script>

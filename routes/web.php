@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
       'index', 'store'
     ]);
 
+    // PRODUCTS
     // Dropzone and Laravel Media Library
     // https://github.com/junicotandiago198/crud-laravel-dropzone
     // https://spatie.be/docs/laravel-medialibrary/v10/installation-setup

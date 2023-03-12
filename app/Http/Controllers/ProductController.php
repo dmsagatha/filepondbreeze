@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Http\Requests\ProductRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class ProductController extends Controller
 
   public function index(): Response
   {
-    return response()->view('products.index', [
+    return response()->view('admon.products.index', [
       'products'        => Product::latest()->get(),
       'mediaCollection' => $this->mediaCollection,
     ]);
@@ -22,8 +22,7 @@ class ProductController extends Controller
 
   public function create(): Response
   {
-    // return response()->view('products.create');
-    return response()->view('products.form');
+    return response()->view('admon.products.form');
   }
 
   /* https://cdn.fs.teachablecdn.com/89p5visTTwO2N0v4O6OS
@@ -64,7 +63,7 @@ class ProductController extends Controller
 
   public function edit(Product $product): Response
   {
-    return response()->view('products.form', [
+    return response()->view('admon.products.form', [
       'product' => $product,
       'photos'  => $product->getMedia($this->mediaCollection),
     ]);

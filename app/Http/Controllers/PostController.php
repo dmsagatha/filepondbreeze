@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Validator;
 use App\Models\TemporaryFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -10,22 +11,15 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
   public function index(): Response
   {
-    return response()->view('posts.index', [
-      // 'posts' => Post::orderBy('title', 'desc')->get()
+    return response()->view('admon.posts.index', [
       'posts' => Post::latest()->get()
     ]);
   }
-
-  /* public function create(): Response
-  {
-    return response()->view('posts.form');
-  } */
   
   public function store(Request $request): RedirectResponse
   {
@@ -101,39 +95,4 @@ class PostController extends Controller
       return response('');
     }
   }
-
-  /* public function show(string $id): Response
-  {
-    return response()->view('posts.show', [
-      'post' => Post::findOrFail($id)
-    ]);
-  }
-
-  public function edit(string $id): Response
-  {
-    return response()->view('posts.form', [
-      'post' => Post::findOrFail($id),
-    ]);
-  }
-  public function edit(Post $post): View
-  {
-    return view('posts.edit', compact('post'));
-  }
-  
-  public function destroy(string $id): RedirectResponse
-  {
-    $post = Post::findOrFail($id);
-
-    $currentImage = str_replace('/storage', '/public', $post->featured_image);
-    Storage::delete($currentImage);
-
-    $delete = $post->delete($id);
-
-    if($delete) {
-      session()->flash('notif.success', 'Post deleted successfully!');
-      return redirect()->route('posts.index');
-    }
-
-    return abort(500);
-  } */
 }

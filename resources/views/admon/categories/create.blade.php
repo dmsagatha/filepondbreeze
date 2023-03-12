@@ -5,10 +5,10 @@
     </h2>
   </x-slot>
 
-  <div class="py-4">
+  <div class="py-2">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6 text-gray-900">
+        <div class="py-1 px-4 text-gray-900">
           @if (session()->has('success'))
             <div class="bg-green-400 text-sm text-green-700 m-2 p-2">
               {{ session('success') }}
@@ -25,7 +25,7 @@
 
             <div>
               <x-input-label for="name" :value="__('Name')" />
-              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" :value="$category->name ?? old('name')"
+              <x-text-input type="text" id="name" name="name" class="block w-full" :value="$category->name ?? old('name')"
                 autofocus autocomplete="name" />
               <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
@@ -33,31 +33,12 @@
             <!-- Photo -->
             <div class="w-60 mt-4">
               <x-input-label for="featured_image" :value="__('Photo')" />
-              {{-- <label for="document">{{ __('Photo') }}</label> --}}
 
               <div class="dropzone" id="dropzone"></div>
               <input type="hidden" readonly class="newimage" name="featured_image" value="">
             </div>
 
-            {{-- <div class="w-60 mt-4">
-            <x-input-label for="featured_image" :value="__('Photo')" />
-            <label class="block mt-2">
-              <span class="sr-only">Choose image</span>
-              <input type="file" id="featured_image" name="featured_image" accept="image/*" class="block w-full text-sm text-slate-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-full file:categoryborder-0
-                file:text-sm file:font-semibold
-                file:bg-violet-50 file:text-violet-700
-                hover:file:bg-violet-100
-              "/>
-            </label>
-            <div class="shrink-0 my-2">
-              <img id="featured_image_preview" class="h-64 w-128 object-cover rounded-md" src="{{ isset($category) ? asset($category->featured_image) : '' }}" alt="Featured image preview" />
-            </div>
-            <x-input-error class="mt-2" :messages="$errors->get('featured_image')" />
-          </div> --}}
-
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-end mt-2">
               <x-primary-button class="ml-4">
                 {{ __('Save') }}
               </x-primary-button>
@@ -76,35 +57,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{ asset('js/dropzone.min.js') }}"></script>
 
-    {{-- <script>
-    // create onchange event listener for featured_image input
-    document.getElementById('featured_image').onchange = function(evt) {
-      const [file] = this.files
-      if (file) {
-        // if there is an image, create a preview in featured_image_preview
-        document.getElementById('featured_image_preview').src = URL.createObjectURL(file)
-      }
-    }
-  </script> --}}
-
     <script>
-      let newimage = [];
-      Dropzone.autoDiscover = false;
+      var uploadedDocumentMap = {}
+      let newimage = []
+      Dropzone.autoDiscover = false
 
       let myDropzone = new Dropzone("#dropzone", {
         url: '{{ route('dropzone.store') }}',
-        // type='post',
+        maxFilesize: 2, // MB
+        addRemoveLinks: true,
+        acceptedFiles: 'image/*',
+        parallelUploads: 1,
+        uploadMultiple: true,
+        paramName: 'featured_image', // Cambiar 'file' por 'featured_image'
+        dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el documento<h3>",
+        dictRemoveFile:'Quitar',
         headers: {
           'X-CSRF-TOKEN': "{{ csrf_token() }}"
         },
-        // url:"/dropzonestore",
-        parallelUploads: 1,
-        uploadMultiple: true,
-        acceptedFiles: 'image/*',
-        paramName: 'featured_image', // Cambiar 'file' por 'featured_image'
-        addRemoveLinks: true,
-        dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el documento<h3>",
-        dictRemoveFile:'Quitar',
+
+        success: function(file, response) {
+          console.log(file);
+          newimage.push(response);
+          console.log(newimage);
+          $(".newimage").val(newimage);
+          $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
+          $(file.previewTemplate).find('.dz-filename span').html(response);
+        },
 
         removedfile: function(file) {
           let removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
@@ -128,16 +107,7 @@
             }
           });
           var _ref;
-          return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) :
-            void 0;
-        },
-        success: function(file, response) {
-          console.log(file);
-          newimage.push(response);
-          console.log(newimage);
-          $(".newimage").val(newimage);
-          $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
-          $(file.previewTemplate).find('.dz-filename span').html(response);
+          return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
         }
       });
     </script>

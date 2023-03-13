@@ -134,9 +134,6 @@ return [
     ],
     'email' => [
       'unique' => 'El campo :attribute ya ha sido registrado.'
-    ],
-    'birthday' => [
-      'older_than' => 'Debe ser mayor de 18 años, por favor actualizar la fecha de nacimiento.'
     ]
   ],
 
@@ -152,13 +149,13 @@ return [
     */
 
   'attributes' => [
-    'book.name'   => 'Nombre',
-    'book.author' => 'Autor',
-    'book.pages'  => 'Número de páginas',
-    'id'                      => 'ID',
-    'company.company_name'    => 'Nombre',
-    'company.company_address' => 'Dirección',
-    'company.company_website' => 'Website',
-    'company.company_email'   => 'Correo',
+    'address'     => 'Dirección',
+    'author'      => 'Autor',
+    'email'       => 'Correo',
+    'id'          => 'ID',
+    'name'        => 'Nombre',
+    'description' => 'Descripción',
+    'pages'       => 'Número de páginas',
+    'website'     => 'Website',
   ],
 ];

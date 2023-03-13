@@ -102,6 +102,7 @@
   "Delete": "Eliminar",
 
   "Users": "Usuarios",
+  "Articles": "Artículos",
   "Categories": "Categorías",
   "Products": "Productos",
   "Product": "Producto",
@@ -118,6 +119,8 @@
 
   "Create Product": "Crear Producto",
   "Edit Product": "Editar Producto",
+  "Create Article": "Crear Artículo",
+  "Edit Article": "Editar Artículo",
 
   "You're logged in!": "¡Estás conectado!"
 }

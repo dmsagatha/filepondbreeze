@@ -37,7 +37,7 @@
                       {{ $item->updated_at }}
                     </td>
                     <td class="m-5 p-5 flex flex-row items-center">
-                      <img src="{{ isset($item) ? asset('uploads'.'/'.$item->imagen) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->imagen) }}" />
+                      <img src="{{ isset($item) ? asset('/uploads/'.$item->imagen) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->imagen) }}" />
                     </td>
                     <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 px-2 text-slate-500 dark:text-slate-400">
                       <div class="flex items-stretch space-x-1">

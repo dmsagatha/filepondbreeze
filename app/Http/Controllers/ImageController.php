@@ -12,9 +12,11 @@ class ImageController extends Controller
   {
     $imagen      = $request->file('file');
     $filename    = Str::uuid() . "." . $imagen->extension();
-    $imageServer = Image::make($imagen); // image::Class esta clase nos permite crear una imagen de intervention.io
+
+    $imageServer = Image::make($imagen);
     $imageServer->fit(100, 100);
-    $imagePath   = public_path('uploads') . '/' . $filename;
+    // $imagePath   = public_path('uploads') . '/' . $filename;
+    $imagePath   = public_path('storage/uploads/') . '/' . $filename;
     $imageServer->save($imagePath);
 
     return response()->json(['imagen' => $filename]);

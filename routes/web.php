@@ -56,15 +56,12 @@ Route::middleware('auth')->group(function () {
 
     // ARTICLES
     Route::resource('articles', ArticleController::class);
-    // Route::post('/images', [ImageController::class, 'store'])->name('images.store');
+    Route::post('/images', [ImageController::class, 'store'])->name('images.store');
   });
   
   // FilePond
   Route::post('/tmp_upload', [PostController::class, 'tmpUplaod']);
   Route::delete('/tmp_delete', [PostController::class, 'tmpDelete']);
-
-  // ARTICLES
-  Route::post('/images', [ImageController::class, 'store'])->name('images.store');
 });
 
 require __DIR__.'/auth.php';

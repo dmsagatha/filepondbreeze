@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -48,5 +49,14 @@ class ArticleController extends Controller
   
   public function destroy(Article $article): RedirectResponse
   {
+    $article->delete();
+
+    $imagen_path = public_path('storage/uploads/'.$article->imagen);
+
+    if (File::exists($imagen_path)) {
+      unlink($imagen_path);
+    }
+
+    return redirect(route('articles.index'))->with('success', 'Registro eliminado');
   }
 }

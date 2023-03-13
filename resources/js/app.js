@@ -17,9 +17,11 @@ Alpine.start();
 
 FilePond.setOptions(pt_ES);
 
+// Deshabilitar el comportamiento de detección automática
 Dropzone.autoDiscover = false;
 
-const dropzone = new Dropzone("#dropzone", {
+let dropzone = new Dropzone("#dropzone", {
+  paramName: "file",
   dictDefaultMessage: "Suelte los archivos aquí o haga clic para cargar la imagen",
   acceptedFiles: 'image/*',
   addRemoveLinks: true,
@@ -29,7 +31,7 @@ const dropzone = new Dropzone("#dropzone", {
 
   init: function () {
     if (document.querySelector('[name="image"]').value.trim()) { // si hay algo
-      const imagePublished = {}
+      let imagePublished = {}
       imagePublished.size = 1234;
       imagePublished.name = document.querySelector('[name="image"]').value;
 
@@ -44,6 +46,6 @@ dropzone.on('success', function (file, response) {
   document.querySelector('[name="image"]').value = response.image;
 });
 
-dropzone.on('removedfile', function () {
+dropzone.on('removedfile', function (file) {
   document.querySelector('[name="image"]').value = "";
 });

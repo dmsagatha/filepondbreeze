@@ -22,8 +22,9 @@ class ArticleRequest extends FormRequest
     }
 
     return [
-      'name'  => $name,
-      'description' => 'required'
+      'name' => $name,
+      'description' => 'required',
+      'image'       => 'required',
     ];
   }
 }

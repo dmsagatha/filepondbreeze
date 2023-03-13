@@ -28,11 +28,11 @@ const dropzone = new Dropzone("#dropzone", {
   uploadMultiple: false,
 
   init: function () {
-    if (document.querySelector('[name="imagen"]').value.trim()) { // si hay algo
+    if (document.querySelector('[name="image"]').value.trim()) { // si hay algo
       const imagePublished = {}
       imagePublished.size = 1234;
-      imagePublished.name = document.querySelector('[name="imagen"]').value;
-      
+      imagePublished.name = document.querySelector('[name="image"]').value;
+
       this.options.addedfile.call(this, imagePublished);
       this.options.thumbnail.call(this, imagePublished, "/uploads/" + imagePublished.name);
       imagePublished.previewElement.classList.add("dz-success", "dz-complete");
@@ -41,9 +41,9 @@ const dropzone = new Dropzone("#dropzone", {
 });
 
 dropzone.on('success', function (file, response) {
-  document.querySelector('[name="imagen"]').value = response.imagen;
+  document.querySelector('[name="image"]').value = response.image;
 });
 
 dropzone.on('removedfile', function () {
-  document.querySelector('[name="imagen"]').value = "";
+  document.querySelector('[name="image"]').value = "";
 });

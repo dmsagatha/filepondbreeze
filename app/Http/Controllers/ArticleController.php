@@ -29,7 +29,7 @@ class ArticleController extends Controller
     Article::create([
       'name'        => $request->name,
       'description' => $request->description,
-      'imagen'      => $request->imagen,
+      'image'       => $request->image,
     ]);
 
     return redirect(route('articles.index'))->with('success', 'Registro creado');
@@ -51,10 +51,10 @@ class ArticleController extends Controller
   {
     $article->delete();
 
-    $imagen_path = public_path('storage/uploads/'.$article->imagen);
+    $image_path = public_path('storage/uploads/'.$article->image);
 
-    if (File::exists($imagen_path)) {
-      unlink($imagen_path);
+    if (File::exists($image_path)) {
+      unlink($image_path);
     }
 
     return redirect(route('articles.index'))->with('success', 'Registro eliminado');

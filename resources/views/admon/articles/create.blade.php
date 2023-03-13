@@ -39,8 +39,8 @@
         </div>
 
         <div class="mb-5">
-          <input name="imagen" type="hidden" class="border p-3 w-full rounded-lg bg-red-50" value="{{ old('imagen') }}" />
-          @error('imagen')
+          <input name="image" type="hidden" class="border p-3 w-full rounded-lg bg-red-50" value="{{ old('image') }}" />
+          @error('image')
             <p class="bg-red-500 text-white my-2 rounded-lg text-sm p-2 text-center">
               {{ $message }}
             </p>

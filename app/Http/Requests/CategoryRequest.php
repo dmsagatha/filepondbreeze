@@ -18,7 +18,8 @@ class CategoryRequest extends FormRequest
     {
       $name = 'required|min:3|unique:categories';
     } else {
-      $name = Rule::unique('users')->ignore($this->category);
+      // $name = Rule::unique('categories')->ignore($this->category);
+      $name = Rule::unique('categories')->ignore($this->route('category'));
     }
 
     return [

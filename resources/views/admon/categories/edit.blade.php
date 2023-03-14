@@ -25,8 +25,7 @@
 
             <div>
               <x-input-label for="name" :value="__('Name')" />
-              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" :value="$category->name ?? old('name')"
-                autofocus autocomplete="name" />
+              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" :value="$category->name ?? old('name')" autofocus autocomplete="name" />
               <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             
@@ -58,10 +57,13 @@
             <x-input-error class="mt-2" :messages="$errors->get('featured_image')" />
           </div> --}}
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="py-2 bg-gray-50 text-center space-y-2">
               <x-primary-button class="ml-4">
-                {{ __('Save') }}
+                {{ __('Uptade') }}
               </x-primary-button>
+              <x-blue-button class="ml-4">
+                <a href="{{ route('categories.index') }}">{{ __('Cancel') }}</a>
+              </x-blue-button>
             </div>
           </form>
         </div>

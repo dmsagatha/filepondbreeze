@@ -32,24 +32,12 @@
               <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
-            <!-- Photo -->
-            {{-- <div class="w-60 mt-4">
-              @if (!isset($category->featured_image))
-                <x-input-label for="featured_image" :value="__('Photo')" />
-
-                <div class="dropzone" id="dropzone"></div>
-                <input type="hidden" readonly class="newimage" name="featured_image" value="">
-              @else
-                <div class="col-md-8 mb-4">
-                  <div class="dropzone" id="dropzone">
-                    @foreach ($featured_image as $item)
-                      <img class="" src="{{ asset('categories/' . $item) }}" class="img-thumbnail"
-                        height="90px" width="150px" />
-                    @endforeach
-                  </div>
-                </div>
-              @endif
+            {{-- <div>
+              <x-input-label for="name" :value="__('Name')" />
+              <x-text-input type="text" id="name" name="name" class="block w-full" :value="$category->name ?? old('name')" autofocus autocomplete="name" />
+              <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div> --}}
+
             <div class="w-60 mt-4">
               <x-input-label for="featured_image" :value="__('Photo')" />
 
@@ -61,8 +49,11 @@
 
             <div class="flex items-center justify-end mt-4">
               <x-primary-button class="ml-4">
-                {{ __('Save') }}
+                {{ __('Uptade') }}
               </x-primary-button>
+              <x-blue-button class="ml-4">
+                <a href="{{ route('categories.index') }}">{{ __('Cancel') }}</a>
+              </x-blue-button>
             </div>
           </form>
         </div>

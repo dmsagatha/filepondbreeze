@@ -8,7 +8,6 @@ use App\Models\TemporaryFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
@@ -57,7 +56,7 @@ class PostController extends Controller
       // Eliminar el archivo temporal del modelo asociado
       $temporaryFile->delete();
 
-      return to_route('posts.index')->with('success', 'Post creado');
+      return to_route('posts.index')->with('success', 'Registro creado');
     }
 
     return to_route('posts.index')->with('danger', 'Por favor subir un archivo');
@@ -94,5 +93,69 @@ class PostController extends Controller
 
       return response('');
     }
+  }
+
+  public function edit(Post $post): Response
+  {
+    return response()->view('admon.posts.edit', [
+      'post' => $post,
+      'featured_image' => explode(',', $post->featured_image)
+    ]);
+  }
+
+  public function update(Request $request, Post $post): RedirectResponse
+  {
+    $validator = Validator::make($request->all(), [
+      'title' => ['required', 'unique:posts']
+    ]);
+
+    // FilePond
+    $temporaryFile = TemporaryFile::where('folder', $request->photo)->first();
+
+    if ($validator->fails() && $temporaryFile) {
+      Storage::deleteDirectory('posts/tmp/' . $temporaryFile->folder);
+      $temporaryFile->delete();
+
+      return to_route('posts.index')->withErrors($validator)->withInput();
+    } elseif ($validator->fails()) {
+      return to_route('posts.index')->withErrors($validator)->withInput();
+    }
+
+    if ($temporaryFile) {
+      Storage::copy('posts/tmp/' . $temporaryFile->folder . '/' . $temporaryFile->filename, 'posts/' . $temporaryFile->folder . '/' . $temporaryFile->filename);
+
+      // Post::create([
+      //   'title' => $request->title,
+      //   'photo' => $temporaryFile->folder . '/' . $temporaryFile->filename
+      // ]);
+
+      $post->photo = $temporaryFile->folder . '/' . $temporaryFile->filename;
+
+      $post->update($request->$post);
+
+      // Eliminar directorio y archivo temporal
+      File::deleteDirectory(storage_path('app/public/posts/tmp/' . $request->photo));
+      // Storage::deleteDirectory('posts/tmp/' . $temporaryFile->folder);
+
+      // Eliminar el archivo temporal del modelo asociado
+      $temporaryFile->delete();
+
+      return to_route('posts.index')->with('success', 'Registro actualizado');
+    }
+
+    return to_route('posts.index')->with('danger', 'Por favor subir un archivo');
+  }
+
+  public function destroy(Post $post): RedirectResponse
+  {
+    $post->delete();
+    $imagen_path = public_path('storage/posts/' . $post->photo);
+    // $imagen_path = storage_path('app/public/categories/'.$category->featured_image);
+
+    if (File::exists($imagen_path)) {
+      unlink($imagen_path);
+    }
+
+    return redirect(route('posts.index'))->with('danger', 'Registro eliminado');
   }
 }

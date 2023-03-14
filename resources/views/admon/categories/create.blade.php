@@ -108,6 +108,13 @@
           });
           var _ref;
           return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+        },
+        
+        init: function(file) {
+          this.on("maxfilesexceeded", function(file) {
+            this.removeAllFiles();
+            this.addFile(file);
+          });
         }
       });
     </script>

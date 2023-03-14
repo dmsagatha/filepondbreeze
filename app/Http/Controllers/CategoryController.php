@@ -43,11 +43,6 @@ class CategoryController extends Controller
     }
     return $imagename;
   }
-    
-  /* public function dropzone_view()
-  {
-    return view("dropzone");
-  } */
 
   public function removefile(Request $request)
   {

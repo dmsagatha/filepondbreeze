@@ -1,4 +1,5 @@
 import './bootstrap';
+import Dropzone from "dropzone";
 
 import Alpine from 'alpinejs';
 import * as FilePond from 'filepond';
@@ -15,3 +16,36 @@ window.FilePondPluginImagePreview = FilePondPluginImagePreview;
 Alpine.start();
 
 FilePond.setOptions(pt_ES);
+
+// Deshabilitar el comportamiento de detección automática
+Dropzone.autoDiscover = false;
+
+let dropzone = new Dropzone("#dropzone", {
+  paramName: "file",
+  dictDefaultMessage: "Suelte los archivos aquí o haga clic para cargar la imagen",
+  acceptedFiles: 'image/*',
+  addRemoveLinks: true,
+  dictRemoveFile: "Quitar archivo",
+  maxFiles: 1,
+  uploadMultiple: false,
+
+  init: function () {
+    if (document.querySelector('[name="image"]').value.trim()) { // si hay algo
+      let imagePublished = {}
+      imagePublished.size = 1234;
+      imagePublished.name = document.querySelector('[name="image"]').value;
+
+      this.options.addedfile.call(this, imagePublished);
+      this.options.thumbnail.call(this, imagePublished, "/uploads/" + imagePublished.name);
+      imagePublished.previewElement.classList.add("dz-success", "dz-complete");
+    }
+  }
+});
+
+dropzone.on('success', function (file, response) {
+  document.querySelector('[name="image"]').value = response.image;
+});
+
+dropzone.on('removedfile', function (file) {
+  document.querySelector('[name="image"]').value = "";
+});

@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\{ArticleController, ImageController};
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/dropzonestore', [CategoryController::class, 'dropzonestore'])->name('dropzone.store');
     Route::post('/removefile', [CategoryController::class,'removefile'])->name('remove.file');
     Route::get('/get-category-image/{id}',[CategoryController::class, 'getImages'])->name('getCategoryImage');
+
+    // ARTICLES
+    Route::resource('articles', ArticleController::class);
+    Route::post('/images', [ImageController::class, 'store'])->name('images.store');
   });
   
   // FilePond

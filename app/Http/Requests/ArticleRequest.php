@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class ArticleRequest extends FormRequest
 {
   public function authorize(): bool
   {
@@ -14,16 +14,17 @@ class CategoryRequest extends FormRequest
   
   public function rules(): array
   {
-    if (request()->routeIs('categories.store'))
+    if (request()->routeIs('articles.store'))
     {
-      $name = 'required|min:3|unique:categories';
+      $name = 'required|min:3|unique:articles';
     } else {
       $name = Rule::unique('users')->ignore($this->category);
     }
 
     return [
-      'name'  => $name,
-      'featured_image' => 'required',
+      'name' => $name,
+      'description' => 'required',
+      'image'       => 'required',
     ];
   }
 }

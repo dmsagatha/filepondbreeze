@@ -24,6 +24,9 @@
           <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
             {{ __('Categories') }} - Dropzone
           </x-nav-link>
+          <x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.index')">
+            {{ __('Articles') }} - Dropzone (NPM)
+          </x-nav-link>
         </div>
       </div>
 

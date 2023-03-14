@@ -37,7 +37,7 @@
               </div>
             </div>
             {{-- <img src="{{ isset($item) ? asset('/categories/'.$item->featured_image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->featured_image) }}" /> --}}
-            
+
             <div class="py-2 bg-gray-50 text-center space-y-2">
               <x-primary-button class="ml-4">
                 {{ __('Uptade') }}
@@ -189,4 +189,4 @@
       });
     </script>
   @endpush
-</x-guest-layout>
+</x-app-layout>

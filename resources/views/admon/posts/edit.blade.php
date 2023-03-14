@@ -76,7 +76,7 @@
   </div>
 
   @push('scripts')
-  <script type="module">
+    <script type="module">
     // Registrar el plugin
       FilePond.registerPlugin(FilePondPluginImagePreview);
       
@@ -92,6 +92,6 @@
           }
         }
       });
-  </script>
+    </script>
   @endpush
-  </x-guest-layout>
+</x-app-layout>

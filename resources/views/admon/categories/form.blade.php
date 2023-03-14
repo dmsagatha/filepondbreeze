@@ -1,148 +1,208 @@
 <x-app-layout>
-  <x-slot:header>
-    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-      {{ isset($category) ? __('Edit') : __('Create') }}
-    </h2>
-  </x-slot>
+    <x-slot:header>
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ isset($category) ? __('Edit') : __('Create') }}
+        </h2>
+    </x-slot:header>
 
-  <div class="py-4">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-      <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6 text-gray-900">
-          @if (session()->has('success'))
-            <div class="bg-green-400 text-sm text-green-700 m-2 p-2">
-              {{ session('success') }}
-            </div>
-          @endif
-          @if (session()->has('danger'))
-            <div class="bg-red-400 text-sm text-red-700 m-2 p-2">
-              {{ session('danger') }}
-            </div>
-          @endif
-          
-          <form method="post" action="{{ isset($category) ? route('categories.update', $category->id) : route('categories.store') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
-            @csrf
-            @isset($category)
-              @method('put')
-            @endisset
+    <div class="py-4">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    @if (session()->has('success'))
+                        <div class="bg-green-400 text-sm text-green-700 m-2 p-2">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session()->has('danger'))
+                        <div class="bg-red-400 text-sm text-red-700 m-2 p-2">
+                            {{ session('danger') }}
+                        </div>
+                    @endif
 
-            <div>
-              <x-input-label for="name" :value="__('Name')" />
-              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" :value="$category->name ?? old('name')" autofocus autocomplete="name" />
-              <x-input-error :messages="$errors->get('name')" class="mt-2" />
-            </div>
+                    {{-- <form method="post"
+                        action="{{ isset($category) ? route('categories.update', $category->id) : route('categories.store') }}"
+                        class="mt-6 space-y-6" enctype="multipart/form-data">
+                        @csrf
+                        @isset($category)
+                            @method('put')
+                        @endisset
 
-            <!-- Photo -->
-            {{-- <div class="w-60 mt-4">
-              <x-input-label for="featured_image" :value="__('Photo')" />
-              
-              <div class="dropzone" id="dropzone"></div>
-              <input type="hidden" readonly class="newimage" name="featured_image" value="">
-            </div> --}}
+                        <div>
+                            <x-input-label for="name" :value="__('Name')" />
+                            <x-text-input type="text" id="name" name="name" class="block mt-1 w-full"
+                                :value="$category->name ?? old('name')" autofocus autocomplete="name" />
+                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        </div>
+                        <!-- Photo -->
 
-            <!-- Photo -->
-            <div class="w-60 mt-4">
-              @if (!isset($category->featured_image))
-                <x-input-label for="featured_image" :value="__('Photo')" />
 
-                <div class="dropzone" id="dropzone"></div>
-                <input type="hidden" readonly class="newimage" name="featured_image" value="">
-              @else
-                <div class="col-md-8 mb-4">
-                  <div class="dropzone" id="dropzone">
-                    @foreach ($featured_image as $item)
-                      <img class="" src="{{ asset('categories/' . $item) }}" class="img-thumbnail"
-                        height="90px" width="150px" />
-                    @endforeach
-                  </div>
+
+                        <div class="w-60 mt-4">
+                            @if (!isset($category->featured_image))
+                                <x-input-label for="featured_image" :value="__('Photo')" />
+
+                                <div class="dropzone" id="dropzone"></div>
+                                <input type="hidden" readonly class="newimage" name="featured_image" value="">
+                            @else
+                                <div class="col-md-8 mb-4">
+                                    <div class="dropzone" id="dropzone">
+                                        @foreach ($featured_image as $item)
+                                            <img class="" src="{{ asset('storage/categories/' . $item) }}"
+                                                class="img-thumbnail" height="90px" width="150px" />
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="w-60 mt-4">
+                            @section('content')
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h1>Subir Imagen</h1>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            @endsection
+                        </div>
+
+
+
+                        <div class="flex items-center justify-end mt-4">
+                            <x-primary-button class="ml-4">
+                                {{ __('Save') }}
+                            </x-primary-button>
+                        </div>
+                    </form> --}}
+
+                    <form method="post"
+                        action="{{ isset($category) ? route('categories.update', $category->id) : route('categories.store') }}"
+                        class="mt-6 space-y-6" enctype="multipart/form-data">
+                        @csrf
+
+                        @method('put')
+
+                        <div>
+                            <x-input-label for="name" :value="__('Name')" />
+                            <x-text-input type="text" id="name" name="name" class="block mt-1 w-full"
+                                :value="$category->name ?? old('name')" autofocus autocomplete="name" />
+                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        </div>
+
+                        <!-- Photo -->
+                        {{-- <div class="w-60 mt-4">
+                            <x-input-label for="featured_image" :value="__('Photo')" />
+
+                            <div class="dropzone" id="dropzone"></div>
+                            <input type="hidden" readonly class="newimage" name="featured_image" value="">
+                        </div> --}}
+
+                        <div class="w-60 mt-4">
+                            <x-input-label for="featured_image" :value="__('Photo')" />
+
+                            <div class="dropzone" id="dropzone"><img id="img"
+                                    src="{{ isset($category) ? asset('storage/categories/' . $category->featured_image) : '' }}"
+                                    class="w-30 h-30 rounded-lg" alt="{{ $category->featured_image }}"></div>
+                            <input type="hidden" readonly class="newimage" name="featured_image" value="">
+
+                        </div>
+
+
+                        <div class="flex items-center justify-end mt-2">
+                            <x-primary-button class="ml-4">
+                                {{ __('Save') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
                 </div>
-              @endif
             </div>
-
-            <div class="flex items-center justify-end mt-4">
-              <x-primary-button class="ml-4">
-                {{ __('Save') }}
-              </x-primary-button>
-            </div>
-          </form>
         </div>
-      </div>
     </div>
-  </div>
 
-  @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
-  @endpush
 
-  @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="{{ asset('js/dropzone.min.js') }}"></script>
 
-    <script>
-      let newimage = [];
-      Dropzone.autoDiscover = false;
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
+    @endpush
 
-      let myDropzone = new Dropzone("#dropzone", {
-        url: '{{ route('dropzone.store') }}',
-        maxFilesize: 2, // MB
-        maxFiles: 1,
-        addRemoveLinks: true,
-        acceptedFiles: 'image/*',
-        parallelUploads: 1,
-        uploadMultiple: true,
-        paramName: 'featured_image', // Cambiar 'file' por 'featured_image'
-        dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el documento<h3>",
-        dictRemoveFile:'Quitar',
-        headers: {
-          'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        },
+    @push('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="{{ asset('js/dropzone.min.js') }}"></script>
 
-        success: function(file, response) {
-          console.log(file);
-          newimage.push(response);
-          console.log(newimage);
-          $(".newimage").val(newimage);
-          $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
-          $(file.previewTemplate).find('.dz-filename span').html(response);
-        },
+        <script>
+            let newimage = [];
+            Dropzone.autoDiscover = false;
 
-        removedfile: function(file) {
-          let removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
-          $.ajax({
-            type: 'POST',
-            url: "{{ route('remove.file') }}",
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-              removeimageName: removeimageName
-            },
-            success: function(data) {
-              console.log(data);
-              for (var i = 0; i < newimage.length; i++) {
-                if (newimage[i] === data) {
-                  newimage.splice(i, 1);
+            let myDropzone = new Dropzone("#dropzone", {
+                url: '{{ route('dropzone.store') }}',
+                maxFilesize: 2, // MB
+                maxFiles: 1,
+                addRemoveLinks: true,
+                acceptedFiles: 'image/*',
+                parallelUploads: 1,
+                uploadMultiple: true,
+                paramName: 'featured_image', // Cambiar 'file' por 'featured_image'
+                dictDefaultMessage: "<h3 class='sbold'>Suelte los archivos aquí o haga clic para cargar el documento<h3>",
+                dictRemoveFile: 'Quitar',
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+
+                success: function(file, response) {
+                    console.log(file);
+                    newimage.push(response);
+                    console.log(newimage);
+                    $(".newimage").val(newimage);
+                    $(file.previewTemplate).find('.dz-filename span').data('dz-name', response);
+                    $(file.previewTemplate).find('.dz-filename span').html(response);
+                },
+
+                removedfile: function(file) {
+                    let removeimageName = $(file.previewElement).find('.dz-filename span').data('dz-name');
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('remove.file') }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            removeimageName: removeimageName
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            for (var i = 0; i < newimage.length; i++) {
+                                if (newimage[i] === data) {
+                                    newimage.splice(i, 1);
+                                }
+                            }
+                            $(".newimage").val(newimage);
+                        }
+                    });
+                    var _ref;
+                    return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) :
+                        void 0;
+                },
+
+
+                init: function(file) {
+
+                    this.on("maxfilesexceeded", function(file) {
+                        this.removeAllFiles();
+                        this.addFile(file);
+                    });
+                    this.on("addedfile", function(file) {
+
+                        $('#img').remove();
+
+
+
+
+                    });
                 }
-              }
-              $(".newimage").val(newimage);
-            }
-          });
-          var _ref;
-          return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-        },
-
-        init: function () {
-          @if(isset($category) && $category->featured_image)
-            var files = {!! json_encode($category->featured_image) !!}
-            for (var i in files) {
-              var file = files[i]
-              this.options.addedfile.call(this, file)
-              file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="featured_image[]" value="' + file.file_name + '">')
-            }
-          @endif
-        }
-      });
-    </script>
-  @endpush
-</x-guest-layout>
+            });
+        </script>
+    @endpush
+</x-app-layout>

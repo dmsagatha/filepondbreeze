@@ -25,10 +25,10 @@ Route::middleware('auth')->group(function () {
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-  
+
   Route::prefix('admin')->group(function () {
     Route::resource('posts', PostController::class)->only([
-      'index', 'store'
+      'index', 'store', 'edit' , 'update', 'destroy'
     ]);
 
     // PRODUCTS
@@ -51,17 +51,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy'); */
     // Dropzone
     Route::post('/dropzonestore', [CategoryController::class, 'dropzonestore'])->name('dropzone.store');
-    Route::post('/removefile', [CategoryController::class,'removefile'])->name('remove.file');
-    Route::get('/get-category-image/{id}',[CategoryController::class, 'getImages'])->name('getCategoryImage');
+    Route::post('/removefile', [CategoryController::class, 'removefile'])->name('remove.file');
+    Route::get('/get-category-image/{id}', [CategoryController::class, 'getImages'])->name('getCategoryImage');
 
     // ARTICLES
     Route::resource('articles', ArticleController::class);
     Route::post('/images', [ImageController::class, 'store'])->name('images.store');
   });
-  
+
   // FilePond
   Route::post('/tmp_upload', [PostController::class, 'tmpUplaod']);
   Route::delete('/tmp_delete', [PostController::class, 'tmpDelete']);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

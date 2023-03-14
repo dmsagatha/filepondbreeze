@@ -18,13 +18,13 @@ class CategoryController extends Controller
       'categories' => Category::latest()->get()
     ]);
   }
-  
+
   public function create(): Response
   {
-    // return response()->view('admon.categories.create');
-    return response()->view('admon.categories.form');
+    return response()->view('admon.categories.create');
+    // return response()->view('admon.categories.form');
   }
-  
+
   /* public function store(CategoryRequest $request): RedirectResponse
   {
     $validated = $request->validated();
@@ -46,7 +46,7 @@ class CategoryController extends Controller
 
     return abort(500);
   } */
-  
+
   public function store(CategoryRequest $request): RedirectResponse
   {
     /* $request->validate([
@@ -79,7 +79,7 @@ class CategoryController extends Controller
     }
     return $imagename;
   }
-    
+
   public function dropzone_view()
   {
     return view("dropzone");
@@ -89,15 +89,15 @@ class CategoryController extends Controller
   {
     $image = $request['removeimageName'];
     $imagepath = storage_path('app/public/categories/');
-    unlink($imagepath.$request['removeimageName']);
-    
+    unlink($imagepath . $request['removeimageName']);
+
     return $image;
   }
-  
+
   public function show(Category $category)
   {
   }
-  
+
   // public function edit($id): Response
   public function edit(Category $category): Response
   {
@@ -112,7 +112,7 @@ class CategoryController extends Controller
       ]);
     }
   }
-  
+
   // public function update(Request $request, $id): RedirectResponse
   public function update(CategoryRequest $request, Category $category): RedirectResponse
   {
@@ -131,16 +131,23 @@ class CategoryController extends Controller
       return abort(500);
     } */
 
+    $imagen_path = public_path('storage/categories/' . $category->featured_image);
+
+    if (File::exists($imagen_path)) {
+      unlink($imagen_path);
+    }
+
     $category->update($request->all());
 
     return to_route('categories.index')->with('success', 'Categoría actualizada');
   }
-  
+
   public function destroy(Category $category): RedirectResponse
   {
     $category->delete();
-    $imagen_path = public_path('storage/categories/'.$category->featured_image);
     // $imagen_path = storage_path('app/public/categories/'.$category->featured_image);
+
+    $imagen_path = public_path('storage/categories/' . $category->featured_image);
 
     if (File::exists($imagen_path)) {
       unlink($imagen_path);

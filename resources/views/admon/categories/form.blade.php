@@ -9,17 +9,6 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 text-gray-900">
-          @if (session()->has('success'))
-            <div class="bg-green-400 text-sm text-green-700 m-2 p-2">
-              {{ session('success') }}
-            </div>
-          @endif
-          @if (session()->has('danger'))
-            <div class="bg-red-400 text-sm text-red-700 m-2 p-2">
-              {{ session('danger') }}
-            </div>
-          @endif
-          
           <form method="post" action="{{ isset($category) ? route('categories.update', $category->id) : route('categories.store') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
             @csrf
             @isset($category)
@@ -60,7 +49,7 @@
 
             <div class="flex items-center justify-end mt-4">
               <x-primary-button class="ml-4">
-                {{ __('Uptade') }}
+                {{ isset($category->id) ? __('Uptade') : __('Save') }}
               </x-primary-button>
               <x-blue-button class="ml-4">
                 <a href="{{ route('categories.index') }}">{{ __('Cancel') }}</a>

@@ -35,15 +35,15 @@ class ArticleController extends Controller
     return redirect(route('articles.index'))->with('success', 'Registro creado');
   }
   
-  public function show(Article $article): Response
+  public function show(Article $article)
   {
   }
   
-  public function edit(Article $article): Response
+  public function edit(Article $article)
   {
   }
   
-  public function update(Request $request, Article $article): RedirectResponse
+  public function update(Request $request, Article $article)
   {
   }
   

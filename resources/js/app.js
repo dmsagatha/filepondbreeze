@@ -1,15 +1,22 @@
 import './bootstrap';
-import Dropzone from "dropzone";
 
 import Alpine from 'alpinejs';
+import swal from 'sweetalert2';
+
+import Dropzone from "dropzone";
 import * as FilePond from 'filepond';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import pt_ES from 'filepond/locale/es-es.js';
+
+import 'sweetalert2/dist/sweetalert2.min.css';
+// import 'sweetalert2/dist/sweetalert2.all.min.js';
 
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 window.Alpine = Alpine;
+window.Swal = swal;
+
 window.FilePond = FilePond;
 window.FilePondPluginImagePreview = FilePondPluginImagePreview;
 

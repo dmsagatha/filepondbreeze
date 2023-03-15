@@ -79,6 +79,7 @@ class CategoryController extends Controller
     $category->update($request->all());
 
     return redirect(route('categories.index'))->with('success', 'Registro actualizado');
+    // return redirect()->back()->with('error','Something goes wrong while uploading file!');
   }
   
   public function destroy(Category $category): RedirectResponse

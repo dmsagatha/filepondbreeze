@@ -37,6 +37,91 @@
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
 
+    {{-- Import SweetAlert2 into Laravel with NPM
+    https://dcblog.dev/import-sweetalert2-into-laravel-with-npm --}}
+
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire('Hello World!')
+      });
+    </script>
+
+    {{--  <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function () {
+         Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+            }
+          })
+      });
+    </script> --}}
+
+    {{-- <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire('Hello World!')
+      });
+
+      document.addEventListener('DOMContentLoaded', function () {
+        let timerInterval
+        Swal.fire({
+          title: 'Auto close alert!',
+          html: 'I will close in <b></b> milliseconds.',
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading()
+            timerInterval = setInterval(() => {
+              const content = Swal.getContent()
+              if (content) {
+                const b = content.querySelector('b')
+                if (b) {
+                  b.textContent = Swal.getTimerLeft()
+                }
+              }
+            }, 100)
+          },
+          willClose: () => {
+            clearInterval(timerInterval)
+          }
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer')
+          }
+        })
+      });
+
+      document.addEventListener('DOMContentLoaded', function () {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: 'You will not be able to recover this imaginary file!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Deleted!',
+              'Your imaginary file has been deleted.',
+              'success'
+            )
+          }
+        })
+      });
+    </script> --}}
+
     @stack('scripts')
   </body>
 </html>

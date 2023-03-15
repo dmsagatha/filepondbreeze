@@ -21,6 +21,8 @@ Route::get('/dashboard', function () {
   return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::post('images', [ImageController::class, 'store'])->name('images.store');
+
 Route::middleware('auth')->group(function () {
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
   Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -28,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
   Route::prefix('admin')->group(function () {
     Route::resource('posts', PostController::class)->only([
-      'index', 'store', 'edit' , 'update', 'destroy'
+      'index', 'store', 'edit', 'update', 'destroy'
     ]);
 
     // PRODUCTS
@@ -56,12 +58,12 @@ Route::middleware('auth')->group(function () {
 
     // ARTICLES
     Route::resource('articles', ArticleController::class);
-    Route::post('/images', [ImageController::class, 'store'])->name('images.store');
   });
 
   // FilePond
   Route::post('/tmp_upload', [PostController::class, 'tmpUplaod']);
   Route::delete('/tmp_delete', [PostController::class, 'tmpDelete']);
 });
+
 
 require __DIR__ . '/auth.php';

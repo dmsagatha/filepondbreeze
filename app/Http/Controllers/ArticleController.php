@@ -18,12 +18,12 @@ class ArticleController extends Controller
       'articles' => Article::latest()->get()
     ]);
   }
-  
+
   public function create(): Response
   {
     return response()->view('admon.articles.create');
   }
-  
+
   public function store(ArticleRequest $request): RedirectResponse
   {
     Article::create([
@@ -34,24 +34,24 @@ class ArticleController extends Controller
 
     return redirect(route('articles.index'))->with('success', 'Registro creado');
   }
-  
-  public function show(Article $article): Response
+
+  public function show(Article $article)
   {
   }
-  
-  public function edit(Article $article): Response
+
+  public function edit(Article $article)
   {
   }
-  
-  public function update(Request $request, Article $article): RedirectResponse
+
+  public function update(Request $request, Article $article)
   {
   }
-  
+
   public function destroy(Article $article): RedirectResponse
   {
     $article->delete();
 
-    $image_path = public_path('storage/uploads/'.$article->image);
+    $image_path = public_path('storage/uploads/' . $article->image);
 
     if (File::exists($image_path)) {
       unlink($image_path);

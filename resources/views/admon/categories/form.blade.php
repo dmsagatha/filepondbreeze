@@ -188,7 +188,6 @@
 
 
                 init: function(file) {
-
                     this.on("maxfilesexceeded", function(file) {
                         this.removeAllFiles();
                         this.addFile(file);
@@ -196,10 +195,6 @@
                     this.on("addedfile", function(file) {
 
                         $('#img').remove();
-
-
-
-
                     });
                 }
             });

@@ -83,16 +83,16 @@
                     class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
                     <a href="#"
                       class="border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-md">SHOW</a>
-                    <a href="#"
+                    <a href="{{ route('posts.edit', $post) }}"
                       class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">EDIT</a>
                     {{-- add delete button using form tag --}}
-                    {{-- <form method="post" action="#" class="inline">
+                    <form method="post" action="{{ route('posts.destroy', $post) }}" class="inline">
                       @csrf
                       @method('delete')
-                      <button
-                        class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
+
+                      <button class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
                         DELETE
-                      </button> --}}
+                      </button>
                     </form>
                   </td>
                 </tr>
@@ -123,4 +123,4 @@
       });
     </script>
   @endpush
-</x-guest-layout>
+</x-app-layout>

@@ -25,8 +25,7 @@
 
             <div>
               <x-input-label for="name" :value="__('Name')" />
-              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" :value="$category->name ?? old('name')"
-                autofocus autocomplete="name" />
+              <x-text-input type="text" id="name" name="name" class="block mt-1 w-full" :value="$category->name ?? old('name')" autofocus autocomplete="name" />
               <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             
@@ -39,29 +38,13 @@
             </div>
             {{-- <img src="{{ isset($item) ? asset('/categories/'.$item->featured_image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->featured_image) }}" /> --}}
 
-
-            {{-- <div class="w-60 mt-4">
-            <x-input-label for="featured_image" :value="__('Photo')" />
-            <label class="block mt-2">
-              <span class="sr-only">Choose image</span>
-              <input type="file" id="featured_image" name="featured_image" accept="image/*" class="block w-full text-sm text-slate-500
-                file:mr-4 file:py-2 file:px-4
-                file:rounded-full file:categoryborder-0
-                file:text-sm file:font-semibold
-                file:bg-violet-50 file:text-violet-700
-                hover:file:bg-violet-100
-              "/>
-            </label>
-            <div class="shrink-0 my-2">
-              <img id="featured_image_preview" class="h-64 w-128 object-cover rounded-md" src="{{ isset($category) ? asset($category->featured_image) : '' }}" alt="Featured image preview" />
-            </div>
-            <x-input-error class="mt-2" :messages="$errors->get('featured_image')" />
-          </div> --}}
-
-            <div class="flex items-center justify-end mt-4">
+            <div class="py-2 bg-gray-50 text-center space-y-2">
               <x-primary-button class="ml-4">
-                {{ __('Save') }}
+                {{ __('Uptade') }}
               </x-primary-button>
+              <x-blue-button class="ml-4">
+                <a href="{{ route('categories.index') }}">{{ __('Cancel') }}</a>
+              </x-blue-button>
             </div>
           </form>
         </div>
@@ -206,4 +189,4 @@
       });
     </script>
   @endpush
-</x-guest-layout>
+</x-app-layout>

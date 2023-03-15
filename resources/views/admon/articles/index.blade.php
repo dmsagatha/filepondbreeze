@@ -2,7 +2,7 @@
   <x-slot:header>
     <div class="flex justify-between">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Articles') }}
+        {{ __('Articles') }} ({{ count($articles) }})
       </h2>
       <a href="{{ route('articles.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Create') }}</a>
     </div>
@@ -43,7 +43,7 @@
                       <div class="flex items-stretch space-x-1">
                         <a href="#" class="border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-md">{{ __('View') }}</a>
 
-                        <a href="{{ route('articles.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
+                        <a href="#" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
                         
                         <form method="post" action="{{ route('articles.destroy', $item) }}" class="inline">
                           @csrf @method('delete')

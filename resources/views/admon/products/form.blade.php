@@ -121,4 +121,4 @@
       }
     </script>
   @endpush
-</x-guest-layout>
+</x-app-layout>

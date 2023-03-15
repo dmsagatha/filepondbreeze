@@ -56,4 +56,4 @@
   @push('styles')
     <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
   @endpush
-</x-guest-layout>
+</x-app-layout>

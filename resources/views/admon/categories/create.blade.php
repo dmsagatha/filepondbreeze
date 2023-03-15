@@ -38,10 +38,13 @@
               <input type="hidden" readonly class="newimage" name="featured_image" value="">
             </div>
 
-            <div class="flex items-center justify-end mt-2">
+            <div class="py-2 bg-gray-50 text-center space-y-2">
               <x-primary-button class="ml-4">
                 {{ __('Save') }}
               </x-primary-button>
+              <x-blue-button class="ml-4">
+                <a href="{{ route('categories.index') }}">{{ __('Cancel') }}</a>
+              </x-blue-button>
             </div>
           </form>
         </div>
@@ -108,8 +111,15 @@
           });
           var _ref;
           return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+        },
+
+        init: function(file) {
+          this.on("maxfilesexceeded", function(file) {
+            this.removeAllFiles();
+            this.addFile(file);
+          });
         }
       });
     </script>
   @endpush
-</x-guest-layout>
+</x-app-layout>

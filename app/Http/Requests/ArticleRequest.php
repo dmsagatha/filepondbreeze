@@ -18,11 +18,11 @@ class ArticleRequest extends FormRequest
     {
       $name = 'required|min:3|unique:articles';
     } else {
-      $name = Rule::unique('users')->ignore($this->category);
+      $name = Rule::unique('articles')->ignore($this->article);
     }
 
     return [
-      'name' => $name,
+      'name'        => $name,
       'description' => 'required',
       'image'       => 'required',
     ];

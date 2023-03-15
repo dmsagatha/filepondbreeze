@@ -21,8 +21,8 @@ class CategoryController extends Controller
   
   public function create(): Response
   {
-    return response()->view('admon.categories.create');
-    // return response()->view('admon.categories.form');
+    // return response()->view('admon.categories.create');
+    return response()->view('admon.categories.form');
   }
   
   public function store(CategoryRequest $request): RedirectResponse

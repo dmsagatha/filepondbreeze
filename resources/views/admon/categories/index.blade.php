@@ -2,7 +2,7 @@
   <x-slot:header>
     <div class="flex justify-between">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Categories') }}
+        {{ __('Categories') }} ({{ count($categories) }})
       </h2>
       <a href="{{ route('categories.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Create') }}</a>
     </div>

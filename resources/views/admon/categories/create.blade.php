@@ -39,7 +39,6 @@
             </div>
 
             <div class="py-2 bg-gray-50 text-center space-y-2">
-            {{-- <div class="flex items-center justify-end mt-2"> --}}
               <x-primary-button class="ml-4">
                 {{ __('Save') }}
               </x-primary-button>

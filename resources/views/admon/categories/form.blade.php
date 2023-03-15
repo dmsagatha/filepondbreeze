@@ -32,14 +32,31 @@
               <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
 
+            <!-- Photo -->
             <div class="w-60 mt-4">
+              @if (!isset($category->featured_image))
+                <x-input-label for="featured_image" :value="__('Photo')" />
+
+                <div class="dropzone" id="dropzone"></div>
+                <input type="hidden" readonly class="newimage" name="featured_image" value="">
+              @else
+                <x-input-label for="featured_image" :value="__('Photo')" />
+
+                <div class="dropzone" id="dropzone">
+                  <img id="img" src="{{ isset($category) ? asset('storage/categories/' . $category->featured_image) : '' }}" class="w-30 h-30 rounded-lg" alt="{{ $category->featured_image }}" />
+                </div>
+                <input type="hidden" readonly class="newimage" name="featured_image" value="">
+              @endif
+            </div>
+
+            {{-- <div class="w-60 mt-4">
               <x-input-label for="featured_image" :value="__('Photo')" />
 
               <div class="dropzone" id="dropzone">
                 <img id="img" src="{{ isset($category) ? asset('storage/categories/' . $category->featured_image) : '' }}" class="w-30 h-30 rounded-lg" alt="{{ $category->featured_image }}" />
               </div>
               <input type="hidden" readonly class="newimage" name="featured_image" value="">
-            </div>
+            </div> --}}
 
             <div class="flex items-center justify-end mt-4">
               <x-primary-button class="ml-4">
@@ -122,9 +139,9 @@
             this.addFile(file);
           });
 
-          /* this.on("addedfile", function(file) {
+          this.on("addedfile", function(file) {
             $('#img').remove();
-          }); */
+          });
         }
       });
     </script>

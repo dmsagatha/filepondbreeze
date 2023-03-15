@@ -22,12 +22,12 @@ Dropzone.autoDiscover = false;
 
 let dropzone = new Dropzone("#dropzone", {
   paramName: "file",
-  dictDefaultMessage: "Suelte los archivos aquí o haga clic para cargar la imagen",
   acceptedFiles: 'image/*',
   addRemoveLinks: true,
-  dictRemoveFile: "Quitar archivo",
   maxFiles: 1,
   uploadMultiple: false,
+  dictDefaultMessage: "Suelte los archivos aquí o haga clic para cargar la imagen",
+  dictRemoveFile: "Quitar archivo",
 
   init: function () {
     if (document.querySelector('[name="image"]').value.trim()) { // si hay algo

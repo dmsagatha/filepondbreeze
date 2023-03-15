@@ -12,6 +12,17 @@
   <div class="py-4">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        @if (session()->has('success'))
+          <div class="bg-green-400 text-sm text-green-700 m-2 p-2">
+            {{ session('success') }}
+          </div>
+        @endif
+        @if (session()->has('danger'))
+          <div class="bg-red-400 text-sm text-red-700 m-2 p-2">
+            {{ session('danger') }}
+          </div>
+        @endif
+        
         <div class="p-4 text-gray-900">
           @if ($products->count())
             <table class="border-collapse table-auto w-full text-sm">

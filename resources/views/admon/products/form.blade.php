@@ -48,7 +48,7 @@
 
             <div class="flex items-center justify-end mt-4">
               <x-primary-button class="ml-4">
-                {{ __('Save') }}
+                {{ isset($product->id) ? __('Uptade') : __('Save') }}
               </x-primary-button>
             </div>
           </form>

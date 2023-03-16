@@ -30,6 +30,10 @@ class CategoryController extends Controller
     Category::create($request->all());
 
     return redirect(route('categories.index'))->with('success', 'Registro creado');
+
+    /* Session()->flash('statusCode', 'success');
+
+    return redirect(route('categories.index'))->withStatus('Registro creado'); */
   }
 
   public function dropzonestore(Request $request)

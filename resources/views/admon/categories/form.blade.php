@@ -38,15 +38,6 @@
               @endif
             </div>
 
-            {{-- <div class="w-60 mt-4">
-              <x-input-label for="featured_image" :value="__('Photo')" />
-
-              <div class="dropzone" id="dropzone">
-                <img id="img" src="{{ isset($category) ? asset('storage/categories/' . $category->featured_image) : '' }}" class="w-30 h-30 rounded-lg" alt="{{ $category->featured_image }}" />
-              </div>
-              <input type="hidden" readonly class="newimage" name="featured_image" value="">
-            </div> --}}
-
             <div class="flex items-center justify-end mt-4">
               <x-primary-button class="ml-4">
                 {{ isset($category->id) ? __('Uptade') : __('Save') }}

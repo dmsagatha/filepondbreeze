@@ -96,6 +96,10 @@ class CategoryController extends Controller
       unlink($imagen_path);
     }
 
-    return redirect(route('categories.index'))->with('danger', 'Registro eliminado');
+    Session()->flash('statusCode', 'warning');
+    
+    return to_route('categories.index')->withStatus('Registro eliminado permanentemente!.');
+
+    // return redirect(route('categories.index'))->with('danger', 'Registro eliminado');
   }
 }

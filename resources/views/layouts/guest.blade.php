@@ -42,7 +42,7 @@
 
     <script type="text/javascript">
       document.addEventListener('DOMContentLoaded', function () {
-        Swal.fire('Hello World!')
+        Swal.fire('I am Sweetalert2!')
       });
     </script>
 

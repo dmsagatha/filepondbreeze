@@ -17,7 +17,7 @@
     });
   @endif */
 
-  document.getElementById("sa-success").addEventListener("click", function() {
+  /* document.getElementById("sa-success").addEventListener("click", function() {
     Swal.fire(
             {
                 title: 'Good job!',
@@ -30,5 +30,5 @@
                 showCloseButton: true
             }
     )
-  });
+  }); */
 </script>

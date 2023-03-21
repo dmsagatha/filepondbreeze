@@ -22,3 +22,21 @@ window.FilePondPluginImagePreview = FilePondPluginImagePreview;
 Alpine.start();
 
 FilePond.setOptions(pt_ES);
+
+window.deleteConfirm = function (formId) {
+  swal.fire({
+    title: 'Esta seguro?',
+    text: "Este registro se eliminará definitivamente!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, eliminar!',
+    cancelButtonText: 'No, cancelar!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      document.getElementById(formId).submit();
+    }
+  });
+}

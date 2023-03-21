@@ -23,7 +23,7 @@
           </div>
         @endif
         
-        @if(session('updatemsg'))
+        @if(session('success'))
           <script>
             swal("Movie updated Successfully -:)");
           </script>
@@ -63,15 +63,23 @@
                         <a href="#" class="border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-md">{{ __('View') }}</a>
 
                         <a href="{{ route('categories.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
+                
+                        {{-- <a type="button" href="#" onclick="deleteConfirm('{{ route('admin.areas.destroy', $item) }}')" class="text-red-600 hover:text-red-900" title="Eliminar">
+                          <i class="fas fa-trash-alt"></i>
+                        </a>
+                        <form id="{{ route('admin.areas.destroy', $item) }}" action="{{ route('admin.areas.destroy', $item) }}"
+                          method="POST">
+                          @method('DELETE')
+                          @csrf
+                        </form> --}}
 
                         {{-- add delete button using form tag --}}
-                        <form method="post" action="{{ route('categories.destroy', $item) }}" class="inline">
+                        <button onclick="deleteConfirm('{{ route('categories.destroy', $item) }}')"
+                          class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
+                          {{ __('Delete') }}
+                        </button>
+                        <form method="POST" id="{{ route('categories.destroy', $item) }}" action="{{ route('categories.destroy', $item) }}" class="inline">
                           @csrf @method('delete')
-
-                          <button
-                            class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
-                            {{ __('Delete') }}
-                          </button>
                         </form>
                       </div>
                     </td>

@@ -102,7 +102,7 @@ class CategoryController extends Controller
       ]);
 
       $category->name = $request['name'];
-      // $category->featured_image = $request['featured_image'];
+      $category->featured_image = $request['featured_image'];
       $category->save();
 
       return redirect()->route('categories.index')->withStatus('Registro actualizado');

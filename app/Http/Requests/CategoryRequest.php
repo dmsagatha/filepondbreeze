@@ -18,12 +18,14 @@ class CategoryRequest extends FormRequest
     {
       $name = 'required|min:3|unique:categories';
     } else {
+      // $name = 'required|unique:categories,name,' . $this->route('category')->id;
       // $name = Rule::unique('categories')->ignore($this->category);
       $name = Rule::unique('categories')->ignore($this->route('category'));
     }
 
     return [
-      'name'  => $name,
+      'name' => $name,
+      // 'featured_image' => 'required|image',
       'featured_image' => 'required',
     ];
   }

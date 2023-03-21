@@ -29,11 +29,9 @@ class CategoryController extends Controller
   {
     Category::create($request->all());
 
-    return redirect(route('categories.index'))->with('success', 'Registro creado');
+    Session()->flash('statusCode', 'success');
 
-    /* Session()->flash('statusCode', 'success');
-
-    return redirect(route('categories.index'))->withStatus('Registro creado'); */
+    return redirect(route('categories.index'))->withStatus('Registro creado');
   }
 
   public function dropzonestore(Request $request)
@@ -63,16 +61,19 @@ class CategoryController extends Controller
   
   public function edit(Category $category): Response
   {
-    if (!is_null($category)) {
+    if (!is_null($category))
+    {
       // return response()->view('admon.categories.edit', [
       return response()->view('admon.categories.form', [
         'category' => $category,
         'featured_image' => explode(',', $category->featured_image)
       ]);
     }
+
+    return redirect(route('categories.index'));
   }
   
-  public function update(CategoryRequest $request, Category $category): RedirectResponse
+  /* public function update(CategoryRequest $request, Category $category): RedirectResponse
   {
     $imagen_path = public_path('storage/categories/' . $category->featured_image);
 
@@ -80,10 +81,34 @@ class CategoryController extends Controller
       unlink($imagen_path);
     }
 
-    $category->update($request->all());
+    // $request->category()->fill($request->validated());
+    // $category->update($request->all());
+    $request->category()->update([
+      'name' => $request->name,
+      'featured_image' => $request->featured_image
+    ]);
 
-    return redirect(route('categories.index'))->with('success', 'Registro actualizado');
-    // return redirect()->back()->with('error','Something goes wrong while uploading file!');
+    Session()->flash('statusCode', 'info');
+
+    return redirect(route('categories.index'))->withStatus('Registro actualizado');
+  } */
+  
+  public function update(Request $request, Category $category): RedirectResponse
+  {
+    if (!is_null($category))
+    {
+      $request->validate([
+        'name' => 'required|unique:categories,name,' . $category->id
+      ]);
+
+      $category->name = $request['name'];
+      // $category->featured_image = $request['featured_image'];
+      $category->save();
+
+      return redirect()->route('categories.index')->withStatus('Registro actualizado');
+    } else {
+      return redirect()->route('categories.index');
+    }
   }
   
   public function destroy(Category $category): RedirectResponse
@@ -99,7 +124,5 @@ class CategoryController extends Controller
     Session()->flash('statusCode', 'warning');
     
     return to_route('categories.index')->withStatus('Registro eliminado permanentemente!.');
-
-    // return redirect(route('categories.index'))->with('danger', 'Registro eliminado');
   }
 }

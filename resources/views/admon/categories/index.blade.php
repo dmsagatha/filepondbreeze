@@ -22,12 +22,6 @@
             {{ session('danger') }}
           </div>
         @endif
-        
-        @if(session('success'))
-          <script>
-            swal("Movie updated Successfully -:)");
-          </script>
-        @endif
 
         <div class="p-4 text-gray-900">
           @if ($categories->count())
@@ -96,15 +90,4 @@
       </div>
     </div>
   </div>
-
-  @push('scripts')
-    {{-- @if (session()->has('success')) --}}
-    {{-- @if(session('success'))
-      <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          Swal.fire('Registro creado!')
-        });
-      </script>
-    @endif --}}
-  @endpush
 </x-app-layout>

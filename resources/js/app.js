@@ -7,25 +7,23 @@ import * as FilePond from 'filepond';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import pt_ES from 'filepond/locale/es-es.js';
 
-import 'sweetalert2/dist/sweetalert2.min.css';
 // import 'sweetalert2/dist/sweetalert2.all.min.js';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 window.Alpine = Alpine;
 window.Swal = swal;
-
 window.FilePond = FilePond;
 window.FilePondPluginImagePreview = FilePondPluginImagePreview;
 
 Alpine.start();
-
 FilePond.setOptions(pt_ES);
 
 window.deleteConfirm = function (formId) {
   swal.fire({
-    title: 'Esta seguro?',
+    title: 'Esta seguro de eliminar el registro?',
     text: "Este registro se eliminará definitivamente!",
     icon: 'warning',
     showCancelButton: true,

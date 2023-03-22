@@ -46,13 +46,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/dropzonestore', [CategoryController::class, 'dropzonestore'])->name('dropzone.store');
     Route::post('/removefile', [CategoryController::class,'removefile'])->name('remove.file');
     Route::get('/get-category-image/{id}',[CategoryController::class, 'getImages'])->name('getCategoryImage');
-
-    // ARTICLES
-    Route::resource('articles', ArticleController::class);
-    Route::post('/images', [ImageController::class, 'store'])->name('images.store');
   });
   
-  // FilePond
+  // FilePond - Posts
   Route::post('/tmp_upload', [PostController::class, 'tmpUplaod']);
   Route::delete('/tmp_delete', [PostController::class, 'tmpDelete']);
 });

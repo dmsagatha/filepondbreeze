@@ -48,7 +48,7 @@ class CategoryController extends Controller
 
   public function removefile(Request $request)
   {
-    $image = $request['removeimageName'];
+    $image     = $request['removeimageName'];
     $imagepath = storage_path('app/public/categories/');
     unlink($imagepath . $request['removeimageName']);
 
@@ -72,59 +72,37 @@ class CategoryController extends Controller
     return redirect(route('categories.index'));
   }
 
-  /* public function update(CategoryRequest $request, Category $category): RedirectResponse
-  {
-    $imagen_path = public_path('storage/categories/' . $category->featured_image);
-
-    if (File::exists($imagen_path)) {
-      unlink($imagen_path);
-    }
-
-    // $request->category()->fill($request->validated());
-    // $category->update($request->all());
-    $request->category()->update([
-      'name' => $request->name,
-      'featured_image' => $request->featured_image
-    ]);
-
-    Session()->flash('statusCode', 'info');
-
-    return redirect(route('categories.index'))->withStatus('Registro actualizado');
-  } */
-
-
-  //FUNCIONAL CON VALDADOR INTERNO
-  // public function update(Request $request, Category $category): RedirectResponse
-  // {
-  //   if (!is_null($category)) {
-  //     $request->validate([
-  //       'name' => 'required|unique:categories,name,' . $category->id
-  //     ]);
-
-  //     $category->name = $request['name'];
-  //     $category->featured_image = $request['featured_image'] ? $request['featured_image'] : $category->featured_image;
-  //     $category->save();
-
-  //     return redirect()->route('categories.index')->withStatus('Registro actualizado');
-  //   } else {
-  //     return redirect()->route('categories.index');
-  //   }
-  // }
-  public function update(CategoryRequest $request, Category $category): RedirectResponse
+  // FUNCIONAL CON VALIDADOR INTERNO
+  /* public function update(Request $request, Category $category): RedirectResponse
   {
     if (!is_null($category)) {
+      $request->validate([
+        'name' => 'required|unique:categories,name,' . $category->id
+      ]);
 
       $category->name = $request['name'];
       $category->featured_image = $request['featured_image'] ? $request['featured_image'] : $category->featured_image;
       $category->save();
 
-
-      Session()->flash('statusCode', 'info');
       return redirect()->route('categories.index')->withStatus('Registro actualizado');
     } else {
       return redirect()->route('categories.index');
     }
+  } */
 
+  public function update(CategoryRequest $request, Category $category): RedirectResponse
+  {
+    if (!is_null($category)) {
+      $category->name = $request['name'];
+      $category->featured_image = $request['featured_image'] ? $request['featured_image'] : $category->featured_image;
+      $category->save();
+
+      Session()->flash('statusCode', 'info');
+
+      return redirect()->route('categories.index')->withStatus('Registro actualizado');
+    } else {
+      return redirect()->route('categories.index');
+    }
   }
 
   public function destroy(Category $category): RedirectResponse

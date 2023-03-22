@@ -48,7 +48,7 @@
                       {{ $item->updated_at }}
                     </td>
                     <td class="m-5 p-5 flex flex-row items-center">
-                      <img src="{{ isset($item) ? asset('/categories/'.$item->featured_image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->featured_image) }}" />
+                      <img src="{{ isset($item) ? asset('storage/categories/'.$item->featured_image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->featured_image) }}" />
 
                       {{-- <img src="{{ asset('/categories/'.$item->featured_image) }}" title="{{ ($item->featured_image) }}" class="w-10 h-10 px-1 rounded-full" alt=""> --}}
                     </td>

@@ -11,22 +11,24 @@ class CategoryRequest extends FormRequest
   {
     return true;
   }
-  
+
   public function rules(): array
   {
-    if (request()->routeIs('categories.store'))
-    {
+    if (request()->routeIs('categories.store')) {
       $name = 'required|min:3|unique:categories';
+      $image = 'required';
     } else {
-      // $name = 'required|unique:categories,name,' . $this->route('category')->id;
+      $name = 'min:3|required|unique:categories,name,' . $this->route('category')->id;
       // $name = Rule::unique('categories')->ignore($this->category);
-      $name = Rule::unique('categories')->ignore($this->route('category'));
+      // $name = Rule::unique('categories')->ignore($this->route('category'));
+      $image = '';
     }
 
     return [
       'name' => $name,
+      'featured_image' => $image,
       // 'featured_image' => 'required|image',
-      'featured_image' => 'required',
+      // 'featured_image' => 'required',
     ];
   }
 }

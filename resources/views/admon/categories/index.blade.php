@@ -56,12 +56,20 @@
 
                         <a href="{{ route('categories.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
                         
-                        <button onclick="deleteConfirm('{{ route('categories.destroy', $item) }}')"
+                        {{-- <button onclick="deleteConfirm('{{ route('categories.destroy', $item) }}')"
                           class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
                           {{ __('Delete') }}
                         </button>
                         <form method="POST" id="{{ route('categories.destroy', $item) }}" action="{{ route('categories.destroy', $item) }}" class="inline">
                           @csrf @method('delete')
+                        </form> --}}
+                        <form method="POST" id="{{ route('categories.destroy', $item) }}" action="{{ route('categories.destroy', $item) }}" class="inline">
+                          @csrf @method('delete')
+
+                          <button type="button" onclick="deleteConfirm('{{ route('categories.destroy', $item) }}')"
+                            class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
+                            {{ __('Delete') }}
+                          </button>
                         </form>
                       </div>
                     </td>

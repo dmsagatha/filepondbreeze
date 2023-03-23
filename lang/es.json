@@ -103,11 +103,13 @@
   "Delete": "Eliminar",
 
   "Users": "Usuarios",
+  "Articles": "Artículos",
+  "Article": "Artículo",
+  "Brand": "Marca",
   "Categories": "Categorías",
   "Category": "Categoría",
   "Products": "Productos",
   "Product": "Producto",
-  "Brand": "Marca",
   
   "Size": "Tamaño",
   "Active": "Activo",
@@ -117,6 +119,8 @@
   "Created At": "Creado",
   "Updated At": "Actualizado",
 
+  "Create Article": "Crear Artículo",
+  "Edit Article": "Editar Artículo",
   "Create Product": "Crear Producto",
   "Edit Product": "Editar Producto",
 

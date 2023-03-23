@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Http\Requests\ArticleRequest;
+use Illuminate\View\View;
+use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
@@ -19,10 +20,16 @@ class ArticleController extends Controller
   
   public function create(): Response
   {
+    return response()->view('admon.articles.create');
   }
   
-  public function store(Request $request): RedirectResponse
+  public function store(ArticleRequest $request): RedirectResponse
   {
+    Article::create($request->all());
+
+    Session()->flash('statusCode', 'success');
+
+    return redirect(route('articles.index'))->withStatus('Registro creado');
   }
   
   public function show(Article $article): Response
@@ -33,7 +40,7 @@ class ArticleController extends Controller
   {
   }
   
-  public function update(Request $request, Article $article): RedirectResponse
+  public function update(ArticleRequest $request, Article $article): RedirectResponse
   {
   }
   

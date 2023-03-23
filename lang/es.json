@@ -103,11 +103,10 @@
   "Delete": "Eliminar",
 
   "Users": "Usuarios",
-  "Articles": "Artículos",
   "Categories": "Categorías",
+  "Category": "Categoría",
   "Products": "Productos",
   "Product": "Producto",
-  "Screens": "Pantallas",
   "Brand": "Marca",
   
   "Size": "Tamaño",
@@ -120,8 +119,6 @@
 
   "Create Product": "Crear Producto",
   "Edit Product": "Editar Producto",
-  "Create Article": "Crear Artículo",
-  "Edit Article": "Editar Artículo",
 
   "You're logged in!": "¡Estás conectado!"
 }

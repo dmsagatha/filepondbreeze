@@ -19,7 +19,7 @@
             {{ __('Posts') }} - Filepond
           </x-nav-link>
           <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
-            {{ __('Products') }} - Dropzone
+            {{ __('Products') }} - Media-Dropzone
           </x-nav-link>
           <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
             {{ __('Categories') }} - Dropzone

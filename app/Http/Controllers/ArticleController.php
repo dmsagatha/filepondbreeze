@@ -38,10 +38,16 @@ class ArticleController extends Controller
   
   public function edit(Article $article): Response
   {
+    return response()->view('admon.articles.edit', compact('article'));
   }
   
   public function update(ArticleRequest $request, Article $article): RedirectResponse
   {
+    $article->update($request->all());
+
+    Session()->flash('statusCode', 'info');
+
+    return redirect(route('articles.index'))->withStatus('Registro atualizado');
   }
   
   public function destroy(Article $article): RedirectResponse

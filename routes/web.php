@@ -46,9 +46,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/dropzonestore', [CategoryController::class, 'dropzonestore'])->name('dropzone.store');
     Route::post('/removefile', [CategoryController::class,'removefile'])->name('remove.file');
     Route::get('/get-category-image/{id}',[CategoryController::class, 'getImages'])->name('getCategoryImage');
-
+  
     // ARTICLES WITH NPM
-    // Route::resource('articles', ArticleController::class);
+    Route::resource('articles', ArticleController::class);
+    Route::post('/images', [ImageController::class, 'store'])->name('images.store');
   });
   
   // FilePond - Posts
@@ -56,8 +57,8 @@ Route::middleware('auth')->group(function () {
   Route::delete('/tmp_delete', [PostController::class, 'tmpDelete']);
   
   // ARTICLES WITH NPM
-  Route::resource('articles', ArticleController::class);
-  Route::post('/images', [ImageController::class, 'store'])->name('images.store');
+  /* Route::resource('articles', ArticleController::class);
+  Route::post('/images', [ImageController::class, 'store'])->name('images.store'); */
 });
 
 require __DIR__.'/auth.php';

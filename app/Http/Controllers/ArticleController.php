@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {

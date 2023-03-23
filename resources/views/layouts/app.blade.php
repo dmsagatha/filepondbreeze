@@ -36,6 +36,8 @@
         {{ $slot }}
       </main>
     </div>
+    
+    @include('partials.msgSweetAlert2')
 
     @stack('scripts')
   </body>

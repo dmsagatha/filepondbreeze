@@ -48,21 +48,25 @@
                       {{ $item->updated_at }}
                     </td>
                     <td class="m-5 p-5 flex flex-row items-center">
-                      <img src="{{ isset($item) ? asset('/categories/'.$item->featured_image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->featured_image) }}" />
-
-                      {{-- <img src="{{ asset('/categories/'.$item->featured_image) }}" title="{{ ($item->featured_image) }}" class="w-10 h-10 px-1 rounded-full" alt=""> --}}
+                      <img src="{{ isset($item) ? asset('storage/categories/'.$item->featured_image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->featured_image) }}" />
                     </td>
                     <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 px-2 text-slate-500 dark:text-slate-400">
                       <div class="flex items-stretch space-x-1">
                         <a href="#" class="border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-md">{{ __('View') }}</a>
 
                         <a href="{{ route('categories.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
-
-                        {{-- add delete button using form tag --}}
-                        <form method="post" action="{{ route('categories.destroy', $item) }}" class="inline">
+                        
+                        {{-- <button onclick="deleteConfirm('{{ route('categories.destroy', $item) }}')"
+                          class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
+                          {{ __('Delete') }}
+                        </button>
+                        <form method="POST" id="{{ route('categories.destroy', $item) }}" action="{{ route('categories.destroy', $item) }}" class="inline">
+                          @csrf @method('delete')
+                        </form> --}}
+                        <form method="POST" id="{{ route('categories.destroy', $item) }}" action="{{ route('categories.destroy', $item) }}" class="inline">
                           @csrf @method('delete')
 
-                          <button
+                          <button type="button" onclick="deleteConfirm('{{ route('categories.destroy', $item) }}')"
                             class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
                             {{ __('Delete') }}
                           </button>

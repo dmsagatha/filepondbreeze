@@ -49,25 +49,13 @@
                     </td>
                     <td class="m-5 p-5 flex flex-row items-center">
                       <img src="{{ isset($item) ? asset('storage/categories/'.$item->featured_image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->featured_image) }}" />
-
-                      {{-- <img src="{{ asset('/categories/'.$item->featured_image) }}" title="{{ ($item->featured_image) }}" class="w-10 h-10 px-1 rounded-full" alt=""> --}}
                     </td>
                     <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 px-2 text-slate-500 dark:text-slate-400">
                       <div class="flex items-stretch space-x-1">
                         <a href="#" class="border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-md">{{ __('View') }}</a>
 
                         <a href="{{ route('categories.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
-                
-                        {{-- <a type="button" href="#" onclick="deleteConfirm('{{ route('admin.areas.destroy', $item) }}')" class="text-red-600 hover:text-red-900" title="Eliminar">
-                          <i class="fas fa-trash-alt"></i>
-                        </a>
-                        <form id="{{ route('admin.areas.destroy', $item) }}" action="{{ route('admin.areas.destroy', $item) }}"
-                          method="POST">
-                          @method('DELETE')
-                          @csrf
-                        </form> --}}
-
-                        {{-- add delete button using form tag --}}
+                        
                         <button onclick="deleteConfirm('{{ route('categories.destroy', $item) }}')"
                           class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
                           {{ __('Delete') }}

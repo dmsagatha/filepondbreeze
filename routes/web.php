@@ -48,13 +48,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-category-image/{id}',[CategoryController::class, 'getImages'])->name('getCategoryImage');
 
     // ARTICLES WITH NPM
-    Route::resource('articles', ArticleController::class);
-    Route::post('/images', [ImageController::class, 'store'])->name('images.store');
+    // Route::resource('articles', ArticleController::class);
   });
   
   // FilePond - Posts
   Route::post('/tmp_upload', [PostController::class, 'tmpUplaod']);
   Route::delete('/tmp_delete', [PostController::class, 'tmpDelete']);
+  
+  // ARTICLES WITH NPM
+  Route::resource('articles', ArticleController::class);
+  Route::post('/images', [ImageController::class, 'store'])->name('images.store');
 });
 
 require __DIR__.'/auth.php';

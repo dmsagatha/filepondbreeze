@@ -3,6 +3,12 @@ import './bootstrap';
 import Alpine from 'alpinejs';
 import swal from 'sweetalert2';
 
+// If you are using JavaScript/ECMAScript modules:
+import Dropzone from "dropzone";
+// If you are using an older version than Dropzone 6.0.0,
+// then you need to disabled the autoDiscover behaviour here:
+Dropzone.autoDiscover = false;
+
 import * as FilePond from 'filepond';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import pt_ES from 'filepond/locale/es-es.js';
@@ -21,6 +27,7 @@ window.FilePondPluginImagePreview = FilePondPluginImagePreview;
 Alpine.start();
 FilePond.setOptions(pt_ES);
 
+// Sweetalert2
 window.deleteConfirm = function (formId) {
   swal.fire({
     title: 'Esta seguro de eliminar el registro?',
@@ -38,3 +45,34 @@ window.deleteConfirm = function (formId) {
     }
   });
 }
+
+// Dropzone
+let dropzone = new Dropzone("#dropzonenpm", {
+  acceptedFiles: "image/*",
+  addRemoveLinks: true,
+  maxFiles: 1,
+  uploadMultiple: false,
+  dictDefaultMessage: "Suelte los archivos aquí o haga clic para cargar el documento",
+  dictRemoveFile: "Quitar imagen",
+
+  init: function () {
+    if (document.querySelector('[name="image"]').value.trim()) { // si hay algo
+      let imagePublished = {}
+      imagePublished.size = 1234;
+      imagePublished.name = document.querySelector('[name="image"]').value;
+
+
+      this.options.addedfile.call(this, imagePublished);
+      this.options.thumbnail.call(this, imagePublished, "/uploads/" + imagePublished.name);
+      imagePublished.previewElement.classList.add("dz-success", "dz-complete");
+    }
+  }
+});
+
+dropzone.on('success', function (file, response) {
+  document.querySelector('[name="image"]').value = response.image;
+});
+
+dropzone.on('removedfile', function () {
+  document.querySelector('[name="image"]').value = "";
+});

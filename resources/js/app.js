@@ -27,7 +27,7 @@ window.FilePondPluginImagePreview = FilePondPluginImagePreview;
 Alpine.start();
 FilePond.setOptions(pt_ES);
 
-// Sweetalert2
+// Sweetalert2 - Eliminar registros
 window.deleteConfirm = function (formId) {
   swal.fire({
     title: 'Esta seguro de eliminar el registro?',
@@ -41,7 +41,20 @@ window.deleteConfirm = function (formId) {
     reverseButtons: true
   }).then((result) => {
     if (result.isConfirmed) {
+      swal.fire(
+        'Eliminado!',
+        'El registro fue eliminado.',
+        'success'
+      )
       document.getElementById(formId).submit();
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      swal.fire({
+        icon:  'error',
+        title: 'Cancelado.',
+        text:  'El registro no fue eliminado.!',
+        timer: 2000,
+        showConfirmButton: false
+      });
     }
   });
 }

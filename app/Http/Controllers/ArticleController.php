@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest;
+use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
@@ -32,7 +33,7 @@ class ArticleController extends Controller
     return redirect(route('articles.index'))->withStatus('Registro creado');
   }
   
-  public function show(Article $article): Response
+  public function show(Article $article)
   {
   }
   
@@ -52,5 +53,17 @@ class ArticleController extends Controller
   
   public function destroy(Article $article): RedirectResponse
   {
+    $article->delete();
+
+    // Eliminar la imagen
+    $imagen_path = public_path('uploads/' . $article->imagen);
+
+    if (File::exists($imagen_path)) {
+      unlink($imagen_path);
+    }
+
+    Session()->flash('statusCode', 'warning');
+
+    return to_route('articles.index')->withStatus('Registro eliminado permanentemente!.');
   }
 }

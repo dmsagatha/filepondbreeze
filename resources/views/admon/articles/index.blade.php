@@ -45,10 +45,10 @@
 
                         <a href="{{ route('articles.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
                         
-                        <form method="post" action="{{ route('articles.destroy', $item) }}" class="inline">
+                        <form method="POST" id="{{ route('articles.destroy', $item) }}" action="{{ route('articles.destroy', $item) }}" class="inline">
                           @csrf @method('delete')
 
-                          <button
+                          <button type="button" onclick="deleteConfirm('{{ route('articles.destroy', $item) }}')"
                             class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
                             {{ __('Delete') }}
                           </button>

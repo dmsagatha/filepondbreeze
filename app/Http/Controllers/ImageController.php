@@ -10,14 +10,23 @@ class ImageController extends Controller
 {
   public function store(Request $request)
   {
-    $image      = $request->file('file');
+    /* $image      = $request->file('file');
     $filename   = Str::uuid() . "." . $image->extension();
 
     $imageServer = Image::make($image);
     $imageServer->fit(100, 100);
-    // $imagePath   = public_path('uploads') . '/' . $filename;
     $imagePath  = public_path('storage/uploads/') . '/' . $filename;
     $imageServer->save($imagePath);
+
+    return response()->json(['image' => $filename]); */
+
+    $image    = $request->file('file');
+    $filename = Str::uuid() . "." . $image->extension();
+    $filepath = storage_path() . '/app/public/uploads/' . $filename;
+    
+    Image::make($image)->resize(100, null, function ($constraint) {
+      $constraint->aspectRatio();
+    })->save($filepath);
 
     return response()->json(['image' => $filename]);
   }

@@ -2,18 +2,18 @@
   <x-slot:header>
     <div class="flex justify-between">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Categories') }} ({{ count($categories) }})
+        {{ __('Articles') }} ({{ count($articles) }})
       </h2>
-      <a href="{{ route('categories.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Create') }}</a>
+      <a href="{{ route('articles.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Create') }}</a>
     </div>
   </x-slot>
 
-  {{-- Listado de Categorías --}}
+  {{-- Listado de Artículos --}}
   <div class="py-4">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-4 text-gray-900">
-          @if ($categories->count())
+          @if ($articles->count())
             <table class="border-collapse table-auto w-full text-sm">
               <thead>
                 <tr>
@@ -25,7 +25,7 @@
                 </tr>
               </thead>
               <tbody class="bg-white">
-                @foreach ($categories as $item)
+                @foreach ($articles as $item)
                   <tr>
                     <td class="border-b border-slate-100 dark:border-slate-700 p-2 pl-8 text-slate-500 dark:text-slate-400">
                       {{ $item->name }}
@@ -37,25 +37,18 @@
                       {{ $item->updated_at }}
                     </td>
                     <td class="m-5 p-5 flex flex-row items-center">
-                      <img src="{{ isset($item) ? asset('storage/categories/'.$item->featured_image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->featured_image) }}" />
+                      <img src="{{ isset($item) ? asset('/uploads/'.$item->image) : '' }}" class="w-10 h-10 rounded-lg" alt="{{ ($item->image) }}" />
                     </td>
                     <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 px-2 text-slate-500 dark:text-slate-400">
                       <div class="flex items-stretch space-x-1">
                         <a href="#" class="border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-md">{{ __('View') }}</a>
 
-                        <a href="{{ route('categories.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
+                        <a href="{{ route('articles.edit', $item) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">{{ __('Edit') }}</a>
                         
-                        {{-- <button onclick="deleteConfirm('{{ route('categories.destroy', $item) }}')"
-                          class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
-                          {{ __('Delete') }}
-                        </button>
-                        <form method="POST" id="{{ route('categories.destroy', $item) }}" action="{{ route('categories.destroy', $item) }}" class="inline">
-                          @csrf @method('delete')
-                        </form> --}}
-                        <form method="POST" id="{{ route('categories.destroy', $item) }}" action="{{ route('categories.destroy', $item) }}" class="inline">
+                        <form method="POST" id="{{ route('articles.destroy', $item) }}" action="{{ route('articles.destroy', $item) }}" class="inline">
                           @csrf @method('delete')
 
-                          <button type="button" onclick="deleteConfirm('{{ route('categories.destroy', $item) }}')"
+                          <button type="button" onclick="deleteConfirm('{{ route('articles.destroy', $item) }}')"
                             class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">
                             {{ __('Delete') }}
                           </button>

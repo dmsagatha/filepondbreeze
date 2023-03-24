@@ -150,7 +150,7 @@ class PostController extends Controller
   {
     $post->delete();
     $imagen_path = public_path('storage/posts/' . $post->photo);
-    // $imagen_path = storage_path('app/public/categories/'.$category->featured_image);
+    // $imagen_path = storage_path('app/public/posts/' . $post->photo);
 
     if (File::exists($imagen_path)) {
       unlink($imagen_path);

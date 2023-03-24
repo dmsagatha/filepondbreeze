@@ -55,7 +55,7 @@ class ArticleController extends Controller
     $article->delete();
 
     // Eliminar la imagen
-    $imagen_path = public_path('uploads/' . $article->imagen);
+    $imagen_path = public_path('storage/uploads/' . $article->image);
 
     if (File::exists($imagen_path)) {
       unlink($imagen_path);

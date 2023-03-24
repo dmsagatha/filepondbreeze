@@ -57,6 +57,47 @@
   </div>
 
   @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
+    <style>
+      .dropzone {
+        border: 2px dashed #028AF4 !important;
+        border-radius: 5px 5px 5px 5px;
+        padding: 5px;
+      }
+      .dz-image img {
+        width: 100%;
+        height: 100%;
+      }
+      .dropzone.dz-started .dz-message {
+        display: block !important;
+      }
+      .dropzone .dz-preview.dz-complete .dz-success-mark {
+          opacity: 1;
+      }
+      .dropzone .dz-preview.dz-error .dz-success-mark {
+          opacity: 0;
+      }
+      .dropzone .dz-preview .dz-error-message{
+        top: 144px;
+      }
+
+      /* .dropzone {
+        border: 2px dashed #428BCA;
+        border-radius: 5px 5px 5px 5px;
+        padding: 5px;
+      } */
+      .dropzone.dz-clickable { cursor: pointer; }
+      .dropzone.dz-clickable * { cursor: default; }
+      .dropzone.dz-clickable .dz-message, .dropzone.dz-clickable .dz-message * { cursor: pointer; }
+      /* .dropzone.dz-started .dz-message { display: none; } */
+      .dropzone.dz-drag-hover { border-style: solid; }
+      .dropzone.dz-drag-hover .dz-message { opacity: 0.5; }
+      .dropzone .dz-message {
+        color: #666;
+        font-size: 1.2em;
+        margin: 0.2em 0;
+        text-align: center;
+      }
+      .dropzone-previews { display: none !important; }
+    </style>
   @endpush
 </x-app-layout>

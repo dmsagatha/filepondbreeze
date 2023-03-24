@@ -20,7 +20,8 @@ class ArticleController extends Controller
   
   public function create(): Response
   {
-    return response()->view('admon.articles.create');
+    // return response()->view('admon.articles.create');
+    return response()->view('admon.articles.form');
   }
   
   public function store(ArticleRequest $request): RedirectResponse
@@ -38,7 +39,8 @@ class ArticleController extends Controller
   
   public function edit(Article $article): Response
   {
-    return response()->view('admon.articles.edit', compact('article'));
+    // return response()->view('admon.articles.edit', compact('article'));
+    return response()->view('admon.articles.form', compact('article'));
   }
   
   public function update(ArticleRequest $request, Article $article): RedirectResponse

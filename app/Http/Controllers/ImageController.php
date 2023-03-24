@@ -30,13 +30,4 @@ class ImageController extends Controller
 
     return response()->json(['image' => $filename]);
   }
-
-  public function removefile(Request $request)
-  {
-    $image     = $request['removeimageName'];
-    $imagepath = storage_path('app/public/uploads/');
-    unlink($imagepath . $request['removeimageName']);
-
-    return $image;
-  }
 }

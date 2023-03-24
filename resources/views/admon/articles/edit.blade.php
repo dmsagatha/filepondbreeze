@@ -9,6 +9,7 @@
     <div class="md:w-1/2 px-10">
       <form action="{{ route('images.store') }}" method="POST" enctype="multipart/form-data" id="dropzonenpm" class="dropzone border-dashed border-2 w-full h-96 rounded flex flex-col justify-center items-center">
         @csrf
+        
       </form>
     </div>
 
@@ -53,6 +54,6 @@
   </div>
 
   @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   @endpush
 </x-app-layout>

@@ -13,6 +13,7 @@ import * as FilePond from 'filepond';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import pt_ES from 'filepond/locale/es-es.js';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import '@fortawesome/fontawesome-free/js/all.js';
 
 import 'dropzone/dist/basic.css';
 // import 'dropzone/dist/dropzone.css';

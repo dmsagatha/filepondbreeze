@@ -49,15 +49,16 @@ class ArticleController extends Controller
       unlink($imagen_path);
     }
 
-    validator($request->all(), [
+    /* validator($request->all(), [
       'title' => 'required',
       'description' => 'required',
       'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
-
+    ]); */
+    
     $article->update($request->all());
 
     Session()->flash('statusCode', 'info');
+    
     return redirect(route('articles.index'))->withStatus('Registro atualizado');
   }
   

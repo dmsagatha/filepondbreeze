@@ -43,10 +43,21 @@ class ArticleController extends Controller
   
   public function update(ArticleRequest $request, Article $article): RedirectResponse
   {
+    $imagen_path = public_path('storage/uploads/' . $article->image);
+
+    if (File::exists($imagen_path) && $request->image != $article->image) {
+      unlink($imagen_path);
+    }
+
+    validator($request->all(), [
+      'title' => 'required',
+      'description' => 'required',
+      'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
     $article->update($request->all());
 
     Session()->flash('statusCode', 'info');
-
     return redirect(route('articles.index'))->withStatus('Registro atualizado');
   }
   

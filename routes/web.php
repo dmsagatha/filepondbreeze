@@ -55,10 +55,6 @@ Route::middleware('auth')->group(function () {
   // FilePond - Posts
   Route::post('/tmp_upload', [PostController::class, 'tmpUplaod']);
   Route::delete('/tmp_delete', [PostController::class, 'tmpDelete']);
-  
-  // ARTICLES WITH NPM
-  /* Route::resource('articles', ArticleController::class);
-  Route::post('/images', [ImageController::class, 'store'])->name('images.store'); */
 });
 
 require __DIR__.'/auth.php';

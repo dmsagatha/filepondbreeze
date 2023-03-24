@@ -82,6 +82,9 @@ let dropzone = new Dropzone("#dropzonenpm", {
       this.options.addedfile.call(this, imagePublished);
       this.options.thumbnail.call(this, imagePublished, "/uploads/" + imagePublished.name);
       imagePublished.previewElement.classList.add("dz-success", "dz-complete");
+      /* self.on('removedfile', function (file, response) {
+        this.removeFile(file);
+      }); */
     }
   }
 });
@@ -91,8 +94,23 @@ dropzone.on('success', function (file, response) {
 });
 
 dropzone.on('removedfile', function (file) {
-  document.querySelector('[name="image"]').value = "";
+  // document.querySelector('[name="image"]').value = "";
+  // file.previewElement.remove();
+  // dropzone.removeFile(file);
+  var _ref;
+  return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
 });
 /* dropzone.on("complete", function(file) {
   dropzone.removeFile(file);
+}); */
+
+/* dropzone.on("success", function(file, response) {
+  $(file.previewTemplate).append('<span class="server_file">'+response.path+'</span>');
+}); */
+
+/* dropzone.on("removedfile", function(file) {
+  var server_file = $(file.previewTemplate).children('.server_file').text();
+  alert(server_file);
+  // Realice una solicitud de publicación y pase esta ruta y use el lenguaje del lado del servidor para eliminar el archivo
+  // $.post("delete.php", { file_to_be_deleted: server_file } );
 }); */

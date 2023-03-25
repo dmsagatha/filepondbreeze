@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot:header>
     <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-      {{ isset($category) ? __('Edit') : __('Create') }}
+      {{ isset($category) ? __('Edit Category') : __('Create Category') }}
     </h2>
   </x-slot>
 
@@ -41,7 +41,7 @@
 
             <div class="flex items-center justify-end mt-4">
               <x-primary-button class="ml-4">
-                {{ isset($category->id) ? __('Uptade') : __('Save') }}
+                {{ isset($category->id) ? __('Update') : __('Save') }}
               </x-primary-button>
               <x-blue-button class="ml-4">
                 <a href="{{ route('categories.index') }}">{{ __('Cancel') }}</a>
@@ -120,9 +120,9 @@
             this.addFile(file);
           });
 
-          this.on("addedfile", function(file) {
+          /* this.on("addedfile", function(file) {
             $('#img').remove();
-          });
+          }); */
         }
       });
     </script>

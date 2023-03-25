@@ -92,22 +92,23 @@ class CategoryController extends Controller
 
   public function update(CategoryRequest $request, Category $category): RedirectResponse
   {
-    if (!is_null($category)) {
-      $category->name = $request['name'];
-      $category->featured_image = $request['featured_image'] ? $request['featured_image'] : $category->featured_image;
-      $category->save();
+    $imagen_path = public_path('storage/categories/' . $category->featured_image);
 
-      Session()->flash('statusCode', 'info');
-
-      return redirect()->route('categories.index')->withStatus('Registro actualizado');
-    } else {
-      return redirect()->route('categories.index');
+    if (File::exists($imagen_path)) {
+      unlink($imagen_path);
     }
+
+    $category->update($request->all());
+
+    Session()->flash('statusCode', 'info');
+
+    return redirect()->route('categories.index')->withStatus('Registro actualizado');
   }
 
   public function destroy(Category $category): RedirectResponse
   {
     $category->delete();
+    
     // $imagen_path = storage_path('app/public/categories/'.$category->featured_image);
     $imagen_path = public_path('storage/categories/' . $category->featured_image);
 

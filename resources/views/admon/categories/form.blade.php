@@ -41,7 +41,7 @@
 
             <div class="flex items-center justify-end mt-4">
               <x-primary-button class="ml-4">
-                {{ isset($category->id) ? __('Uptade') : __('Save') }}
+                {{ isset($category->id) ? __('Update') : __('Save') }}
               </x-primary-button>
               <x-blue-button class="ml-4">
                 <a href="{{ route('categories.index') }}">{{ __('Cancel') }}</a>

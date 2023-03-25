@@ -14,8 +14,7 @@ class ArticleRequest extends FormRequest
 
   public function rules(): array
   {
-    if (request()->routeIs('articles.store'))
-    {
+    if (request()->routeIs('articles.store')) {
       $name  = 'required|min:3|unique:articles';
       $image = 'required';
     } else {

@@ -17,14 +17,16 @@ class ArticleRequest extends FormRequest
     if (request()->routeIs('articles.store'))
     {
       $name  = 'required|min:3|unique:articles';
+      $image = 'required';
     } else {
       $name  = ['required', 'min:3', Rule::unique('articles')->ignore($this->route('article'))];
+      $image = '';
     }
 
     return [
       'name'        => $name,
       'description' => 'required',
-      'image'       => 'required'
+      'image'       => $image
     ];
   }
 }

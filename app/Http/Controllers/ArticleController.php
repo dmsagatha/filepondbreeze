@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -50,12 +51,6 @@ class ArticleController extends Controller
     if (File::exists($imagen_path) && $request->image != $article->image) {
       unlink($imagen_path);
     }
-
-    /* validator($request->all(), [
-      'title' => 'required',
-      'description' => 'required',
-      'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]); */
     
     $article->update($request->all());
 

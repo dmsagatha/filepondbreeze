@@ -153,6 +153,7 @@ return [
     'author'      => 'Autor',
     'email'       => 'Correo',
     'id'          => 'ID',
+    'image'       => 'Imagen',
     'name'        => 'Nombre',
     'description' => 'Descripción',
     'pages'       => 'Número de páginas',
